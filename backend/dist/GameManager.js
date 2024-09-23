@@ -35,6 +35,12 @@ class GameManager {
                     game.makeMove(socket, message.move);
                 }
             }
+            if (message.type === messages_1.AVAILABLE_MOVES) {
+                const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
+                if (game) {
+                    game.available_moves(socket, message.position);
+                }
+            }
         });
     }
 }

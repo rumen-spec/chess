@@ -23,6 +23,12 @@ class Game {
             }
         }));
     }
+    available_moves(socket, position) {
+        socket.send(JSON.stringify({
+            type: messages_1.AVAILABLE_MOVES,
+            payload: this.board.moves({ square: position })
+        }));
+    }
     makeMove(socket, move) {
         if (this.moves.length % 2 === 0 && socket !== this.player1) {
             return;

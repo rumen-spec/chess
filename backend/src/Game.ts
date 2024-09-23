@@ -1,6 +1,6 @@
 import {WebSocket} from "ws";
-import {Chess} from "chess.js";
-import {GAME_OVER, INIT_GAME, MOVE} from "./messages";
+import {Chess, Square} from "chess.js";
+import {AVAILABLE_MOVES, GAME_OVER, INIT_GAME, MOVE} from "./messages";
 
 export class Game {
     player1: WebSocket
@@ -27,6 +27,13 @@ export class Game {
             payload: {
                 color: 'black'
             }
+        }))
+    }
+
+    available_moves(socket: WebSocket, position: Square){
+        socket.send(JSON.stringify({
+            type: AVAILABLE_MOVES,
+            payload: this.board.moves({square: position})
         }))
     }
 

@@ -1,10 +1,10 @@
+import Chessboard from "./Chessboard.tsx";
+
 function Home (){
 
     return(
         <>
-            <h1>
-                Home
-            </h1>
+                <Chessboard/>
         </>
     )
 }
