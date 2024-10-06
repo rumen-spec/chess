@@ -14,8 +14,8 @@
 
 .chess-piece:hover{
     cursor: grab;
-    outline: white solid 3px;
-    background-color: rgb(173,193,58);
+    /*outline: white solid 3px;*/
+    /*background-color: rgb(173,193,58);*/
 }
 
 .chess-piece:active{

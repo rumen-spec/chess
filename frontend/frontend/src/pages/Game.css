@@ -1,0 +1,46 @@
+.game-container {
+    display: flex;
+    justify-content: center;  /* Centers the entire game horizontally */
+    align-items: center;      /* Centers the game vertically */
+    height: 100vh;            /* Full height of the viewport */
+    gap: 20px;                /* Adds space between the chessboard and the controls */
+}
+
+.chessboard-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.controls-container {
+    display: flex;
+    flex-direction: column;   /* Stacks the title and button container vertically */
+    align-items: center;
+    gap: 20px;                /* Adds space between title and buttons */
+}
+
+.game-title {
+    font-size: 30px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+
+.button-container {
+    display: flex;
+    gap: 20px;                /* Adds space between the buttons */
+}
+
+button {
+    width: 200px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text {
+    font-size: 20px;
+    color: #646cff;
+}
