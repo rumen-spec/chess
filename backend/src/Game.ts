@@ -33,6 +33,7 @@ export class Game {
     available_moves(socket: WebSocket, position: Square){
         socket.send(JSON.stringify({
             type: AVAILABLE_MOVES,
+            square: position,
             payload: this.board.moves({square: position})
         }))
     }

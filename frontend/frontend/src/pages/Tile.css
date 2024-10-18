@@ -4,6 +4,7 @@
     width: 100px;
     height: 100px;
     color: white;
+    z-index: -1;
 }
 .chess-piece{
     height: 94px;
@@ -14,8 +15,7 @@
 
 .chess-piece:hover{
     cursor: grab;
-    /*outline: white solid 3px;*/
-    /*background-color: rgb(173,193,58);*/
+    background-color: rgb(173,193,58);
 }
 
 .chess-piece:active{
@@ -26,5 +26,5 @@
     background-color: #779556;
 }
  .white-tile{
-    background-color: white;
+    background-color: rgb(230,232,198);
 }

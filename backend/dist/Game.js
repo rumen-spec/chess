@@ -26,6 +26,7 @@ class Game {
     available_moves(socket, position) {
         socket.send(JSON.stringify({
             type: messages_1.AVAILABLE_MOVES,
+            square: position,
             payload: this.board.moves({ square: position })
         }));
     }
