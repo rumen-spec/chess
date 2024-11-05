@@ -1,0 +1,8 @@
+services:
+  - name: websocket-backend
+    type: web
+    plan: free
+    buildCommand: "npm install"
+    startCommand: "node index.js"
+    runtime: node
+    autoDeploy: true
