@@ -1,6 +1,6 @@
 import {WebSocket} from "ws";
 import {Chess, Square} from "chess.js";
-import {AVAILABLE_MOVES, GAME_OVER, INIT_GAME, MOVE} from "./messages";
+import {AVAILABLE_MOVES, CHECK, GAME_OVER, INIT_GAME, MOVE} from "./messages";
 
 export class Game {
     player1: WebSocket
@@ -38,6 +38,7 @@ export class Game {
         }))
     }
 
+
     makeMove(socket: WebSocket, move: { from: string, to: string }) {
         if(this.moves.length % 2 === 0 && socket !== this.player1){
             return;
@@ -70,14 +71,25 @@ export class Game {
         if(this.moves.length % 2 === 0){
             this.player1.send(JSON.stringify({
                 type: MOVE,
-                payload: move
+                payload: move,
             }))
+
+            if(this.board.inCheck()){
+                this.player1.send(JSON.stringify({
+                    type: CHECK,
+                }))
+            }
         }
         if(this.moves.length % 2 === 1){
             this.player2.send(JSON.stringify({
                 type: MOVE,
                 payload: move
             }))
+            if(this.board.inCheck()){
+                this.player2.send(JSON.stringify({
+                    type: CHECK,
+                }))
+            }
         }
     }
 }

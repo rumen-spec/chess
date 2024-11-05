@@ -1,19 +1,12 @@
 import "./Chessboard.css"
 import Tile from "./Tile";
 import React, {useState} from "react";
-import send from './Game.tsx'
-import useWebSocket, {ReadyState} from 'react-use-websocket';
 
 const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"];
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
-const DEFAULT_POSITION = 'RNBQKBNRPPPPPPPPPPPPPPPPRNBQKBNR'
+const DEFAULT_POSITION: string = 'RNBQKBNRPPPPPPPPPPPPPPPPRNBQKBNR';
 
-
-interface ChessboardProps {
-    sendJsonMessage: (message: any) => void,
-}
-
-function Chessboard({sendJsonMessage}: ChessboardProps) {
+function Chessboard() {
 
     let counter = 0;
     let counter2 = 0;

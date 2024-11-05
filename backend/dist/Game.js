@@ -63,14 +63,24 @@ class Game {
         if (this.moves.length % 2 === 0) {
             this.player1.send(JSON.stringify({
                 type: messages_1.MOVE,
-                payload: move
+                payload: move,
             }));
+            if (this.board.inCheck()) {
+                this.player1.send(JSON.stringify({
+                    type: messages_1.CHECK,
+                }));
+            }
         }
         if (this.moves.length % 2 === 1) {
             this.player2.send(JSON.stringify({
                 type: messages_1.MOVE,
                 payload: move
             }));
+            if (this.board.inCheck()) {
+                this.player2.send(JSON.stringify({
+                    type: messages_1.CHECK,
+                }));
+            }
         }
     }
 }

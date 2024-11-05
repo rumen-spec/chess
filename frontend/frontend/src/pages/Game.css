@@ -4,6 +4,7 @@
     align-items: center;      /* Centers the game vertically */
     height: 100vh;            /* Full height of the viewport */
     gap: 20px;                /* Adds space between the chessboard and the controls */
+
 }
 
 .chessboard-container {
@@ -24,6 +25,34 @@
     font-size: 30px;
     text-align: center;
     margin-bottom: 10px;
+}
+
+.numbers{
+    width: 40px;
+    color: grey;
+    height: 800px;
+    display: grid;
+    /*align-items: center;*/
+    justify-items: center;
+    padding-right: 3px;
+    padding-left: 3px;
+    /*background-color: red;*/
+}
+
+.letters{
+    width: 800px;
+    color: grey;
+    height: 40px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.moves{
+    height: 800px;
+    width: 150px;
+    background-color: grey;
+    display: flex;
 }
 
 
