@@ -1,1 +1,1 @@
-export let DEF = 'RNBQKBNRPPPPPPPPPPPPPPPPRNBQKBNP'
+export const BACKEND = 'ws://localhost:8080'

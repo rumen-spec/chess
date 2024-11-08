@@ -1,6 +1,5 @@
 import "./Chessboard.css"
 import Tile from "./Tile";
-import React, {useState} from "react";
 
 const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"];
 const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"];
@@ -29,41 +28,9 @@ function Chessboard() {
         }
     }
 
-    // const movepiece = (e: React.MouseEvent) => {
-    //     const element = e.target as HTMLDivElement;
-    //     if (element.classList.contains('chess-piece')) {
-    //         const board = document.getElementById('chessboard')?.getBoundingClientRect();
-    //
-    //
-    //         element.style.position = `absolute`
-    //         element.style.left = `${e.screenX - board.x - (horizontalAxis.indexOf(element.id[0]) * 100) -50}px`;
-    //         element.style.top = `${e.screenY - board.y - (parseInt(element.id[1]) * 120) -50}px`;
-    //         console.log(element.style.left, element.style.top);
-    //
-    //     }
-    // };
-
-    const grabPiece = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        // const element = e.target as HTMLDivElement;
-        // if (element.classList.contains('chess-piece')) {
-        //     const board = document.getElementById('chessboard')?.getBoundingClientRect();
-        //
-        //
-        //     element.style.position = `absolute`
-        //     element.style.left = `${e.screenX - board.x - (horizontalAxis.indexOf(element.id[0]) * 100) -50}px`;
-        //     element.style.top = `${e.screenY - board.y - (parseInt(element.id[1]) * 120) -50}px`;
-        //     console.log(element.style.left, element.style.top);
-        //
-        //     sendJsonMessage({
-        //         type: 'available_moves',
-        //         position: element.id
-        //     })
-        // }
-
-    }
 
     return (
-        <div id="chessboard" onMouseDown={e => (grabPiece(e))}>
+        <div id="chessboard">
             {board}
         </div>
     )
