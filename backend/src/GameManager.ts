@@ -1,6 +1,6 @@
 import { WebSocket} from "ws";
 import {Game} from './Game'
-import {AVAILABLE_MOVES, INIT_GAME, MOVE} from "./messages";
+import {AVAILABLE_MOVES, DISCONNECT, INIT_GAME, MOVE} from "./messages";
 
 export class GameManager {
     private games: Game[];
@@ -20,6 +20,29 @@ export class GameManager {
 
     removeUser(socket: WebSocket){
         this.users.splice(this.users.indexOf(socket), 1);
+
+    }
+
+    test(socket: WebSocket){
+        const game = this.games.find((game) => game.player1 == socket)
+        const game1 = this.games.find((game) => game.player2 == socket)
+
+            if(game){
+                game.player2.send(JSON.stringify({
+                    type: DISCONNECT
+                }));
+
+                this.games.splice(this.games.indexOf(game), 1);
+                return;
+            }
+            if(game1){
+                game1.player1.send(JSON.stringify({
+                    type: DISCONNECT
+                }));
+
+                this.games.splice(this.games.indexOf(game1), 1);
+                return;
+            }
     }
 
     private addHandler(socket: WebSocket){
