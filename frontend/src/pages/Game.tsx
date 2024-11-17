@@ -2,8 +2,11 @@ import './Game.css';
 import Chessboard from "./Chessboard.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useWebSocketContext} from "./WebSocketContext.tsx";
-import scores from "./consts.ts";
+import resources from "./consts.ts";
 import {useNavigate} from "react-router-dom";
+import check from '../../images/check.png';
+import dot from '../../images/dot.png';
+import dot_piece from "../../images/dot_piece.png";
 
 
 function Game() {
@@ -24,8 +27,10 @@ function Game() {
     const [game_over, setGameOver] = useState<string>();
     const message = messages.current
     const nav = useNavigate();
+    const {images, scores} = resources;
 
 
+    if(!gamestate.current) nav('/');
 
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
@@ -40,7 +45,6 @@ function Game() {
 
     function handleMouseDown(e:any) {
         const element = e.target as HTMLElement;
-        console.log("i");
         if (element.classList.contains('chess-piece')) {
             element.style.border = '3px solid white';
             element.style.backgroundColor = 'rgb(173,193,58)';
@@ -57,7 +61,6 @@ function Game() {
     }
 
     useEffect(() => {
-        console.log(message);
         if (message!==undefined){// if another user joins game
             if (message.type === "init_game") {
 
@@ -80,8 +83,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("../../images/wK.png")') {
-                                _tile.style.backgroundImage = 'url("../../images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(wK)})`) {
+                                _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
                         }
@@ -91,8 +94,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("../../images/bK.png")') {
-                                _tile.style.backgroundImage = 'url("../../images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(bK)})`) {
+                                _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
                         }
@@ -141,32 +144,32 @@ function Game() {
             }
 
             if (message.type === "move") {
-                const startingtile = document.getElementById(message.payload.from) as HTMLDivElement;
-                const endingtile = document.getElementById(message.payload.to) as HTMLDivElement;
+                const starting_tile = document.getElementById(message.payload.from) as HTMLDivElement;
+                const ending_tile = document.getElementById(message.payload.to) as HTMLDivElement;
 
                 movelist.current.push(message.payload.from + '→' + message.payload.to);
 
                 const chessboard = document.getElementById('chessboard') as HTMLElement;
                 chessboard.style.pointerEvents = "all";
 
-                const piece = startingtile.firstChild as HTMLDivElement;
-                startingtile.removeChild(piece);
-                piece.id = endingtile.id;
+                const piece = starting_tile.firstChild as HTMLDivElement;
+                starting_tile.removeChild(piece);
+                piece.id = ending_tile.id;
 
-                if (endingtile.firstChild != null) {
+                if (ending_tile.firstChild != null) {
                     const pieces = document.getElementsByClassName('chess-piece');
                     for (let piecekey = 0; piecekey < pieces.length; piecekey++) {
                         // @ts-ignore
-                        if (pieces[piecekey].id === endingtile.firstChild.id) {
+                        if (pieces[piecekey].id === ending_tile.firstChild.id) {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
-                            SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage[18] + capturedPiece.style.backgroundImage[19]])
-                            const score = scores.get(capturedPiece.style.backgroundImage[19]);
+                            SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
+                            const score = scores.get(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
                             if(score) setOpponent_score(prevState => prevState+score)
                         }
                     }
-                    endingtile.removeChild(endingtile.firstChild);
+                    ending_tile.removeChild(ending_tile.firstChild);
                 }
-                endingtile.appendChild(piece);
+                ending_tile.appendChild(piece);
                 activeTile.current = piece;
                 activeTile.current.style.backgroundColor = 'rgb(173,193,58)';
 
@@ -213,9 +216,9 @@ function Game() {
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
                     if (tile.firstChild != null) {
-                        tile.style.backgroundImage = `url("../../images/dot_piece.png")`
+                        tile.style.backgroundImage = `url(${dot_piece})`
                     } else {
-                        tile.style.backgroundImage = `url("../../images/dot.png")`
+                        tile.style.backgroundImage = `url(${dot})`
                     }
                 }
 
@@ -289,7 +292,6 @@ function Game() {
                         } else if (activeTile.current.id == 'c8' && previousTile.current.id == 'e8') {
                             const rooktile = document.getElementById('a8') as HTMLDivElement;
                             const castleTile = document.getElementById('d8') as HTMLDivElement;
-                            console.log(castleTile)
                             if (rooktile.firstChild) {
                                 castleTile.appendChild(rooktile.firstChild)
                                 // @ts-ignore
@@ -308,8 +310,8 @@ function Game() {
                             // @ts-ignore
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
-                                SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage[18] + capturedPiece.style.backgroundImage[19]])
-                                const score = scores.get(capturedPiece.style.backgroundImage[19]);
+                                SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
+                                const score = scores.get(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
                                 if(score) setUser_score(prevState => prevState+score)
                             }
                         }
@@ -347,8 +349,7 @@ function Game() {
 
     function mainmenu(){
         gamestate.current = false
-        nav("/")
-
+        nav("https://chess-bay-kappa.vercel.app/")
     }
 
     return (
@@ -377,9 +378,9 @@ function Game() {
                     <div className="players"> Opponent</div>
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("../../images/${piece}.png")`,
-                            width: '30px',
-                            height: '30px'
+                            backgroundImage: piece,
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{opponent_score !== 0 ?
                         <text className='score'>+ {opponent_score}</text> : <></>}</div>
                     <Chessboard/>
@@ -398,9 +399,9 @@ function Game() {
                     <div className="players"> You</div>
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("../../images/${piece}.png")`,
-                            width: '30px',
-                            height: '30px'
+                            backgroundImage: piece,
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{user_score !== 0 ?
                         <text className='score'>+ {user_score}</text> : <></>}</div>
                 </div>

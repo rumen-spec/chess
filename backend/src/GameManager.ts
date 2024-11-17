@@ -50,7 +50,7 @@ export class GameManager {
             const message = JSON.parse(data.toString());
 
             if (message.type === INIT_GAME) {
-                if(this.pendingUser){
+                if(this.pendingUser && socket != this.pendingUser){
                     const game = new Game(this.pendingUser, socket)
                     this.games.push(game);
                     this.pendingUser = null;

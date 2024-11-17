@@ -38,7 +38,7 @@ class GameManager {
         socket.on("message", (data) => {
             const message = JSON.parse(data.toString());
             if (message.type === messages_1.INIT_GAME) {
-                if (this.pendingUser) {
+                if (this.pendingUser && socket != this.pendingUser) {
                     const game = new Game_1.Game(this.pendingUser, socket);
                     this.games.push(game);
                     this.pendingUser = null;
