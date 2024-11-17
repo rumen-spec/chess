@@ -1,4 +1,5 @@
 import {createContext, useContext, ReactNode, useRef} from 'react';
+// @ts-ignore
 import useWebSocket, { SendJsonMessage } from 'react-use-websocket';
 import { BACKEND } from './consts.ts';
 
@@ -22,6 +23,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
         onMessage: (msg) => { messages.current = JSON.parse(msg.data)} // Ensure msg.data gets assigned to message correctly
     });
 
+    console.log(messages)
 
         return (
             <WebSocketContext.Provider value={{sendJsonMessage, messages, gamestate}}>

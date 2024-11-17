@@ -21,22 +21,56 @@
     gap: 20px;                /* Adds space between title and buttons */
 }
 
+.captured {
+    /*background-color: red;*/
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    outline: white thick;
+    border: 2px white solid;
+    border-radius: 15px;
+    align-items: center;
+}
+
+.win-container{
+    width: 200px;
+    height: 900px;
+    align-content: center;
+}
+button{
+    color: white;
+}
+.captured-container{
+    display: flex;
+    padding-bottom: 5px;
+}
+
+.score{
+    font-size: 23px;
+    font-weight: bold;
+    color: white;
+    padding-left: 10px;
+}
+
+.players{
+    color: white;
+    font-family: "Times New Roman";
+}
 .game-title {
     font-size: 30px;
     text-align: center;
     margin-bottom: 10px;
 }
 
+
 .numbers{
     width: 40px;
     color: grey;
     height: 800px;
     display: grid;
-    /*align-items: center;*/
     justify-items: center;
     padding-right: 3px;
     padding-left: 3px;
-    /*background-color: red;*/
 }
 
 .letters{
@@ -72,4 +106,8 @@ button {
 .text {
     font-size: 20px;
     color: #646cff;
+}
+
+.players{
+    font-size: 25px;
 }

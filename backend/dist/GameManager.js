@@ -16,6 +16,24 @@ class GameManager {
     removeUser(socket) {
         this.users.splice(this.users.indexOf(socket), 1);
     }
+    test(socket) {
+        const game = this.games.find((game) => game.player1 == socket);
+        const game1 = this.games.find((game) => game.player2 == socket);
+        if (game) {
+            game.player2.send(JSON.stringify({
+                type: messages_1.DISCONNECT
+            }));
+            this.games.splice(this.games.indexOf(game), 1);
+            return;
+        }
+        if (game1) {
+            game1.player1.send(JSON.stringify({
+                type: messages_1.DISCONNECT
+            }));
+            this.games.splice(this.games.indexOf(game1), 1);
+            return;
+        }
+    }
     addHandler(socket) {
         socket.on("message", (data) => {
             const message = JSON.parse(data.toString());

@@ -30,7 +30,7 @@ class Game {
             payload: this.board.moves({ square: position })
         }));
     }
-    makeMove(socket, move) {
+    makeMove(socket, move, ...args) {
         if (this.moves.length % 2 === 0 && socket !== this.player1) {
             return;
         }
@@ -43,21 +43,6 @@ class Game {
         }
         catch (e) {
             console.error(e);
-            return;
-        }
-        if (this.board.isGameOver()) {
-            this.player1.send(JSON.stringify({
-                type: messages_1.GAME_OVER,
-                payload: {
-                    winner: this.board.turn() === 'w' ? "black" : "white"
-                }
-            }));
-            this.player2.send(JSON.stringify({
-                type: messages_1.GAME_OVER,
-                payload: {
-                    winner: this.board.turn() === 'w' ? "black" : "white"
-                }
-            }));
             return;
         }
         if (this.moves.length % 2 === 0) {
@@ -81,6 +66,41 @@ class Game {
                     type: messages_1.CHECK,
                 }));
             }
+        }
+        if (this.board.isGameOver()) {
+            if (this.board.isCheckmate()) {
+                this.player1.send(JSON.stringify({
+                    type: messages_1.GAME_OVER,
+                    payload: {
+                        how: "checkmate",
+                        winner: this.board.turn() === 'w' ? "black" : "white"
+                    }
+                }));
+                this.player2.send(JSON.stringify({
+                    type: messages_1.GAME_OVER,
+                    payload: {
+                        how: "checkmate",
+                        winner: this.board.turn() === 'w' ? "black" : "white"
+                    }
+                }));
+            }
+            else if (this.board.isStalemate()) {
+                this.player1.send(JSON.stringify({
+                    type: messages_1.GAME_OVER,
+                    payload: {
+                        how: "stalemate",
+                        winner: this.board.turn() === 'w' ? "black" : "white"
+                    }
+                }));
+                this.player2.send(JSON.stringify({
+                    type: messages_1.GAME_OVER,
+                    payload: {
+                        how: "stalemate",
+                        winner: this.board.turn() === 'w' ? "black" : "white"
+                    }
+                }));
+            }
+            return;
         }
     }
 }
