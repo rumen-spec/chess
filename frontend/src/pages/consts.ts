@@ -1,4 +1,4 @@
-export const BACKEND = 'ws://localhost:8080'
+export const BACKEND = 'https://chess-1-bfwu.onrender.com'
 
 
 const scores = new Map<string, number>()
