@@ -163,8 +163,8 @@ function Game() {
                         // @ts-ignore
                         if (pieces[piecekey].id === endingtile.firstChild.id) {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
-                            SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.id])
-                            const score = scores.get(capturedPiece.id);
+                            SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
+                            const score = scores.get(capturedPiece.style.backgroundImage);
                             if(score) setOpponent_score(prevState => prevState+score)
                         }
                     }
@@ -312,9 +312,8 @@ function Game() {
                             // @ts-ignore
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
-                                SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.id])
-                                console.log(capturedPiece);
-                                const score = scores.get(capturedPiece.id);
+                                SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
+                                const score = scores.get(capturedPiece.style.backgroundImage);
                                 if(score) setUser_score(prevState => prevState+score)
                             }
                         }
@@ -382,7 +381,7 @@ function Game() {
                     <div className="players"> Opponent</div>
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url(${images.get(piece)})`,
+                            backgroundImage: `url(${piece})`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{opponent_score !== 0 ?
@@ -403,7 +402,7 @@ function Game() {
                     <div className="players"> You</div>
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url(${images.get(piece)})`,
+                            backgroundImage: `url(${piece})`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{user_score !== 0 ?

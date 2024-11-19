@@ -16,11 +16,18 @@ export const BACKEND = 'wss://chess-u5c0.onrender.com'
 const images = new Map<string, string>()
 const scores = new Map<string, number>()
 
-scores.set('P', 1);
-scores.set('B', 3);
-scores.set('N', 3);
-scores.set('R', 5);
-scores.set('Q', 9);
+scores.set(wP, 1);
+scores.set(bP, 1);
+scores.set(wN, 3);
+scores.set(bN, 3);
+scores.set(wB, 3);
+scores.set(bB, 3);
+scores.set(wR, 5);
+scores.set(bR, 5);
+scores.set(wQ, 9);
+scores.set(bQ, 9);
+
+
 
 images.set('wP', wP)
 images.set('wR', wR)
