@@ -2,8 +2,11 @@ import './Game.css';
 import Chessboard from "./Chessboard.tsx";
 import {useEffect, useRef, useState} from "react";
 import {useWebSocketContext} from "./WebSocketContext.tsx";
-import scores from "./consts.ts";
+import resources from "./consts.ts";
 import {useNavigate} from "react-router-dom";
+import check from '../../images/check.png';
+import dot from '../../images/dot.png';
+import dot_piece from "../../images/dot_piece.png";
 
 
 function Game() {
@@ -24,6 +27,7 @@ function Game() {
     const [game_over, setGameOver] = useState<string>();
     const message = messages.current
     const nav = useNavigate();
+    const {images, scores} = resources;
 
 
 
@@ -80,8 +84,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("/images/wK.png")') {
-                                _tile.style.backgroundImage = 'url("/images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == `url(${wK})`) {
+                                _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
                         }
@@ -91,8 +95,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("/images/bK.png")') {
-                                _tile.style.backgroundImage = 'url("/images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == `url(${bK})`) {
+                                _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
                         }
@@ -213,9 +217,9 @@ function Game() {
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
                     if (tile.firstChild != null) {
-                        tile.style.backgroundImage = `url("frontend/src/pages/images/dot_piece.png")`
+                        tile.style.backgroundImage = `url(${dot})`
                     } else {
-                        tile.style.backgroundImage = `url("frontend/src/pages/images/dot.png")`
+                        tile.style.backgroundImage = `url(${dot_piece})`
                     }
                 }
 
@@ -377,7 +381,7 @@ function Game() {
                     <div className="players"> Opponent</div>
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("frontend/src/pages/images/${piece}.png")`,
+                            backgroundImage: `url(${images.get(piece)})`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{opponent_score !== 0 ?
@@ -398,7 +402,7 @@ function Game() {
                     <div className="players"> You</div>
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("frontend/src/pages/images/${piece}.png")`,
+                            backgroundImage: `url(${images.get(piece)})`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{user_score !== 0 ?
