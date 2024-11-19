@@ -313,6 +313,7 @@ function Game() {
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.id])
+                                console.log(capturedPiece.id);
                                 const score = scores.get(capturedPiece.id);
                                 if(score) setUser_score(prevState => prevState+score)
                             }
