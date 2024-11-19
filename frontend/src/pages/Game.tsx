@@ -217,9 +217,9 @@ function Game() {
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
                     if (tile.firstChild != null) {
-                        tile.style.backgroundImage = `url(${dot})`
-                    } else {
                         tile.style.backgroundImage = `url(${dot_piece})`
+                    } else {
+                        tile.style.backgroundImage = `url(${dot})`
                     }
                 }
 
