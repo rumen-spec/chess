@@ -1,4 +1,6 @@
 import "./Tile.css";
+import wk from '../../images/wK.png'
+
 
 interface Props{
     num: number;
@@ -11,11 +13,11 @@ export default function Tile({num, id, image}: Props) {
 
      if(num%2==0){
         return(<div className='tile black-tile' id={id} >
-            {image !== ''? <div style={{backgroundImage: `url(${require("/images/${image}.png")})`}} className='chess-piece' id={id} key={image}></div> : <></>}
+            {image !== ''? <div style={{backgroundImage: `url(${wk})`}} className='chess-piece' id={id} key={image}></div> : <></>}
         </div>)
     }if(num%2==1){
         return(<div className='tile white-tile' id={id} >
-            {image !== ''? <div style={{backgroundImage: `url(${require("/images/${image}.png")})`}} className='chess-piece' id={id} key={image}></div> : <></>}
+            {image !== ''? <div style={{backgroundImage: `url(${wk})`}} className='chess-piece' id={id} key={image}></div> : <></>}
         </div>)
     }
 
