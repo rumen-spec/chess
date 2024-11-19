@@ -84,7 +84,7 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${wK})`) {
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(wK)})`) {
                                 _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
@@ -95,7 +95,7 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${bK})`) {
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(bK)})`) {
                                 _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
@@ -313,6 +313,7 @@ function Game() {
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage[18] + capturedPiece.style.backgroundImage[19]])
+                                console.log(UserCapturedPieces)
                                 const score = scores.get(capturedPiece.style.backgroundImage[19]);
                                 if(score) setUser_score(prevState => prevState+score)
                             }
