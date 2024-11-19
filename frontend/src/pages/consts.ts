@@ -1,4 +1,4 @@
-export const BACKEND = 'ws://chess-u5c0.onrender.com'
+export const BACKEND = 'wss://chess-u5c0.onrender.com'
 
 
 const scores = new Map<string, number>()
