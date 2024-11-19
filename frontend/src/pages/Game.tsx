@@ -80,8 +80,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("../images/wK.png")') {
-                                _tile.style.backgroundImage = 'url("../images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == 'url("/images/wK.png")') {
+                                _tile.style.backgroundImage = 'url("/images/check.png")';
                                 king.current = _tile.id
                             }
                         }
@@ -91,8 +91,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("../images/bK.png")') {
-                                _tile.style.backgroundImage = 'url("../images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == 'url("/images/bK.png")') {
+                                _tile.style.backgroundImage = 'url("/images/check.png")';
                                 king.current = _tile.id
                             }
                         }
@@ -213,9 +213,9 @@ function Game() {
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
                     if (tile.firstChild != null) {
-                        tile.style.backgroundImage = `url("../images/dot_piece.png")`
+                        tile.style.backgroundImage = `url("/images/dot_piece.png")`
                     } else {
-                        tile.style.backgroundImage = `url("../images/dot.png")`
+                        tile.style.backgroundImage = `url("/images/dot.png")`
                     }
                 }
 
@@ -377,7 +377,7 @@ function Game() {
                     <div className="players"> Opponent</div>
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("../images/${piece}.png")`,
+                            backgroundImage: `url("/images/${piece}.png")`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{opponent_score !== 0 ?
@@ -398,7 +398,7 @@ function Game() {
                     <div className="players"> You</div>
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url("../images/${piece}.png")`,
+                            backgroundImage: `url("/images/${piece}.png")`,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{user_score !== 0 ?
