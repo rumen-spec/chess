@@ -80,8 +80,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("frontend/src/pages/images/wK.png")') {
-                                _tile.style.backgroundImage = 'url("frontend/src/pages/images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == 'url("/images/wK.png")') {
+                                _tile.style.backgroundImage = 'url("/images/check.png")';
                                 king.current = _tile.id
                             }
                         }
@@ -91,8 +91,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == 'url("frontend/src/pages/images/bK.png")') {
-                                _tile.style.backgroundImage = 'url("frontend/src/pages/images/check.png")';
+                            if (_tile.firstChild.style.backgroundImage == 'url("/images/bK.png")') {
+                                _tile.style.backgroundImage = 'url("/images/check.png")';
                                 king.current = _tile.id
                             }
                         }
