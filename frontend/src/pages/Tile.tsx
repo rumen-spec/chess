@@ -1,5 +1,6 @@
 import "./Tile.css";
-import wk from '../../images/wK.png'
+// @ts-ignore
+import wk from "../../images/wK.png"
 
 
 interface Props{
