@@ -164,8 +164,12 @@ function Game() {
                         if (pieces[piecekey].id === endingtile.firstChild.id) {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
                             SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-                            const score = scores.get(capturedPiece.style.backgroundImage);
-                            if(score) setOpponent_score(prevState => prevState+score)
+
+                            const image = images.get(capturedPiece.style.backgroundImage);
+                            if(image) {
+                                const score = scores.get(image);
+                                if(score) setOpponent_score(prevState => prevState+score)
+                            }
                         }
                     }
                     endingtile.removeChild(endingtile.firstChild);
@@ -313,8 +317,12 @@ function Game() {
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-                                const score = scores.get(capturedPiece.style.backgroundImage);
-                                if(score) setUser_score(prevState => prevState+score)
+
+                                const image = images.get(capturedPiece.style.backgroundImage);
+                                if(image) {
+                                    const score = scores.get(image);
+                                    if(score) setUser_score(prevState => prevState+score)
+                                }
                             }
                         }
                         // @ts-ignore
