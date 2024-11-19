@@ -166,6 +166,7 @@ function Game() {
                             SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
 
                             const image = images.get(capturedPiece.style.backgroundImage);
+                            console.log(image);
                             if(image) {
                                 const score = scores.get(image);
                                 if(score) setOpponent_score(prevState => prevState+score)
