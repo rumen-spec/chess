@@ -164,13 +164,9 @@ function Game() {
                         if (pieces[piecekey].id === endingtile.firstChild.id) {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
                             SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-
-                            const image = images.get(capturedPiece.style.backgroundImage);
-                            console.log(image);
-                            if(image) {
-                                const score = scores.get(image);
-                                if(score) setOpponent_score(prevState => prevState+score)
-                            }
+                            const score = scores.get(capturedPiece.style.backgroundImage);
+                            console.log(score);
+                            if(score) setOpponent_score(prevState => prevState+score)
                         }
                     }
                     endingtile.removeChild(endingtile.firstChild);
