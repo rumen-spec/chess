@@ -22,12 +22,8 @@
 }
 
 .captured {
-    background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    outline: white thick;
-    border: 2px white solid;
-    border-radius: 15px;
     align-items: center;
 }
 
