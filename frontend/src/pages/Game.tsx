@@ -44,7 +44,6 @@ function Game() {
 
     function handleMouseDown(e:any) {
         const element = e.target as HTMLElement;
-        console.log("i");
         if (element.classList.contains('chess-piece')) {
             element.style.border = '3px solid white';
             element.style.backgroundColor = 'rgb(173,193,58)';
@@ -61,7 +60,6 @@ function Game() {
     }
 
     useEffect(() => {
-        console.log(message);
         if (message!==undefined){// if another user joins game
             if (message.type === "init_game") {
 
@@ -165,7 +163,6 @@ function Game() {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
                             SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
                             const score = scores.get(capturedPiece.style.backgroundImage);
-                            console.log(score);
                             if(score) setOpponent_score(prevState => prevState+score)
                         }
                     }
@@ -294,7 +291,6 @@ function Game() {
                         } else if (activeTile.current.id == 'c8' && previousTile.current.id == 'e8') {
                             const rooktile = document.getElementById('a8') as HTMLDivElement;
                             const castleTile = document.getElementById('d8') as HTMLDivElement;
-                            console.log(castleTile)
                             if (rooktile.firstChild) {
                                 castleTile.appendChild(rooktile.firstChild)
                                 // @ts-ignore
@@ -314,7 +310,7 @@ function Game() {
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 console.log(capturedPiece.style.backgroundImage);
-                                console.log(capturedPiece.style.backgroundImage);
+                                console.log(images.get('bP'));
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
 
                                 const image = images.get(capturedPiece.style.backgroundImage);
@@ -388,9 +384,9 @@ function Game() {
                     <div className="players"> Opponent</div>
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url(${piece})`,
-                            width: '30px',
-                            height: '30px'
+                            backgroundImage: piece,
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{opponent_score !== 0 ?
                         <text className='score'>+ {opponent_score}</text> : <></>}</div>
                     <Chessboard/>
@@ -410,8 +406,8 @@ function Game() {
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
                             backgroundImage: piece,
-                            width: '30px',
-                            height: '30px'
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{user_score !== 0 ?
                         <text className='score'>+ {user_score}</text> : <></>}</div>
                 </div>
