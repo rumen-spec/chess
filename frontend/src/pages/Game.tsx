@@ -313,6 +313,7 @@ function Game() {
                             // @ts-ignore
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
+                                console.log(capturedPiece);
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
 
                                 const image = images.get(capturedPiece.style.backgroundImage);
