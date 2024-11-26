@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Game from "./pages/Game.tsx";
 import {WebSocketProvider} from "./pages/WebSocketContext.tsx";
 import Home from "./pages/Home.tsx";
-import {ProtectedRoute} from "./pages/ProtectedRoute.tsx";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 function App() {
     return(
@@ -16,9 +16,8 @@ function App() {
           }/>
           <Route path="/game" element={
               <WebSocketProvider>
-                  <ProtectedRoute>
+                  <SpeedInsights/>
                       <Game/>
-                  </ProtectedRoute>
               </WebSocketProvider>
           }/>
           </Routes>
