@@ -137,7 +137,11 @@ function Game() {
             }
 
             if(message.type === "disconnect"){
-                if(!game_over)setGameOver("Opponent disconnected");
+                if(!game_over) {
+                    const chessboardElement = document.getElementById('chessboard') as HTMLElement;
+                    chessboardElement.style.pointerEvents = "none";
+                    setGameOver("Opponent disconnected");
+                }
             }
 
             if (message.type === "move") {
