@@ -409,7 +409,7 @@ function Game() {
                     <div className="players"> You</div>
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
-                            backgroundImage: `url(${piece})`,
+                            backgroundImage: piece,
                             width: '30px',
                             height: '30px'
                         }}></div>))}{user_score !== 0 ?
