@@ -1,6 +1,6 @@
 import { WebSocket} from "ws";
 import {Game} from './Game'
-import {AVAILABLE_MOVES, DISCONNECT, INIT_GAME, MOVE} from "./messages";
+import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE} from "./messages";
 
 export class GameManager {
     private games: Game[];
@@ -56,6 +56,20 @@ export class GameManager {
                     this.pendingUser = null;
                 }else{
                     this.pendingUser = socket;
+                }
+            }
+
+            if(message.type == CANCEL){
+
+                if(this.pendingUser == socket){
+                    if(this.users.length != 0){
+                        this.pendingUser = this.users[0];
+                        this.users.splice(0, 1);
+                    }else {
+                        this.pendingUser = null;
+                    }
+                }else{
+                    this.users.splice(this.users.indexOf(socket), 1);
                 }
             }
 

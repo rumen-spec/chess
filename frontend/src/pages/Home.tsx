@@ -26,6 +26,9 @@ function Home (){
 
     function reload(){
         setLoading(false)
+        sendJsonMessage({
+            type: "cancel"
+        })
         navigate("/")
     }
 
