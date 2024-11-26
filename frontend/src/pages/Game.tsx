@@ -309,15 +309,9 @@ function Game() {
                             // @ts-ignore
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
-                                console.log(capturedPiece.style.backgroundImage);
-                                console.log(images.get('bP'));
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-
-                                const image = images.get(capturedPiece.style.backgroundImage);
-                                if(image) {
-                                    const score = scores.get(image);
-                                    if(score) setUser_score(prevState => prevState+score)
-                                }
+                                const score = scores.get(capturedPiece.style.backgroundImage);
+                                if(score) setUser_score(prevState => prevState+score)
                             }
                         }
                         // @ts-ignore
