@@ -30,7 +30,7 @@ function Game() {
     const {images, scores} = resources;
 
 
-    if(!gamestate) nav('/');
+    if(!gamestate.current) nav('/');
 
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
