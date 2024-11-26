@@ -382,8 +382,8 @@ function Game() {
                     <div className='captured-container'>
                         {OpponentCapturedPieces.map((piece) => (<div className='captured' style={{
                             backgroundImage: `url("../../images/${piece}.png")`,
-                            width: '30px',
-                            height: '30px'
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{opponent_score !== 0 ?
                         <text className='score'>+ {opponent_score}</text> : <></>}</div>
                     <Chessboard/>
@@ -403,8 +403,8 @@ function Game() {
                     <div className='captured-container'>
                         {UserCapturedPieces.map((piece) => (<div className='captured' style={{
                             backgroundImage: `url("../../images/${piece}.png")`,
-                            width: '30px',
-                            height: '30px'
+                            width: '35px',
+                            height: '35px'
                         }}></div>))}{user_score !== 0 ?
                         <text className='score'>+ {user_score}</text> : <></>}</div>
                 </div>
