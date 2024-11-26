@@ -60,7 +60,6 @@ export class GameManager {
             }
 
             if(message.type == CANCEL){
-
                 if(this.pendingUser == socket){
                     if(this.users.length != 0){
                         this.pendingUser = this.users[0];
