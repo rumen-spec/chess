@@ -3,5 +3,6 @@ import {useWebSocketContext} from "./WebSocketContext.tsx";
 export function ProtectedRoute() {
 
     const {gamestate} = useWebSocketContext();
-    return gamestate.current ? <Outlet/>:<Navigate to={'/'}/>
+    console.log(gamestate);
+    return gamestate.current ? <Outlet/>:<Navigate to={"https://chess-bay-kappa.vercel.app/"}/>
     }

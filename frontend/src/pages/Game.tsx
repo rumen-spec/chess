@@ -143,32 +143,32 @@ function Game() {
             }
 
             if (message.type === "move") {
-                const startingtile = document.getElementById(message.payload.from) as HTMLDivElement;
-                const endingtile = document.getElementById(message.payload.to) as HTMLDivElement;
+                const starting_tile = document.getElementById(message.payload.from) as HTMLDivElement;
+                const ending_tile = document.getElementById(message.payload.to) as HTMLDivElement;
 
                 movelist.current.push(message.payload.from + '→' + message.payload.to);
 
                 const chessboard = document.getElementById('chessboard') as HTMLElement;
                 chessboard.style.pointerEvents = "all";
 
-                const piece = startingtile.firstChild as HTMLDivElement;
-                startingtile.removeChild(piece);
-                piece.id = endingtile.id;
+                const piece = starting_tile.firstChild as HTMLDivElement;
+                starting_tile.removeChild(piece);
+                piece.id = ending_tile.id;
 
-                if (endingtile.firstChild != null) {
+                if (ending_tile.firstChild != null) {
                     const pieces = document.getElementsByClassName('chess-piece');
                     for (let piecekey = 0; piecekey < pieces.length; piecekey++) {
                         // @ts-ignore
-                        if (pieces[piecekey].id === endingtile.firstChild.id) {
+                        if (pieces[piecekey].id === ending_tile.firstChild.id) {
                             const capturedPiece = pieces[piecekey] as HTMLDivElement;
                             SetOpponentCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-                            const score = scores.get(capturedPiece.style.backgroundImage);
+                            const score = scores.get(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
                             if(score) setOpponent_score(prevState => prevState+score)
                         }
                     }
-                    endingtile.removeChild(endingtile.firstChild);
+                    ending_tile.removeChild(ending_tile.firstChild);
                 }
-                endingtile.appendChild(piece);
+                ending_tile.appendChild(piece);
                 activeTile.current = piece;
                 activeTile.current.style.backgroundColor = 'rgb(173,193,58)';
 
@@ -310,9 +310,7 @@ function Game() {
                             if (pieces[piecekey].id === active.firstChild.id) {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
-                                console.log(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
                                 const score = scores.get(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
-                                console.log(score)
                                 if(score) setUser_score(prevState => prevState+score)
                             }
                         }
@@ -350,8 +348,7 @@ function Game() {
 
     function mainmenu(){
         gamestate.current = false
-        nav("/")
-
+        nav("https://chess-bay-kappa.vercel.app/")
     }
 
     return (
