@@ -1,12 +1,21 @@
+/* General reset and transitions */
+* {
+    transition: all 0.3s ease-in-out;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Game container styling */
 .game-container {
     display: flex;
     justify-content: center;  /* Centers the entire game horizontally */
     align-items: center;      /* Centers the game vertically */
     height: 100vh;            /* Full height of the viewport */
     gap: 20px;                /* Adds space between the chessboard and the controls */
-
 }
 
+/* Chessboard container */
 .chessboard-container {
     display: flex;
     justify-content: center;
@@ -14,6 +23,7 @@
     flex-shrink: 0;
 }
 
+/* Controls container */
 .controls-container {
     display: flex;
     flex-direction: column;   /* Stacks the title and button container vertically */
@@ -21,54 +31,32 @@
     gap: 20px;                /* Adds space between title and buttons */
 }
 
-.captured {
-    background-position: center;
-    background-size: cover;
-    align-items: center;
-}
-
-.win-container{
-    width: 200px;
-    height: 900px;
-    align-content: center;
-}
-button{
-    color: white;
-}
-.captured-container{
-    display: flex;
-    padding-bottom: 5px;
-}
-
-.score{
-    font-size: 23px;
+/* Players styling */
+.players {
+    color: white; /* React blue for players */
+    font-size: 25px;
     font-weight: bold;
-    color: white;
-    padding-left: 10px;
+    margin: 10px 0;
 }
 
-.players{
-    color: white;
-    font-family: "Times New Roman";
-}
+/* Game title styling */
 .game-title {
     font-size: 30px;
     text-align: center;
     margin-bottom: 10px;
 }
 
-
-.numbers{
+/* Chessboard coordinates */
+.numbers {
     width: 40px;
     color: grey;
     height: 800px;
     display: grid;
-    justify-items: center;
-    padding-right: 3px;
-    padding-left: 3px;
+    place-items: center;      /* Center the numbers */
+    padding: 0 3px;
 }
 
-.letters{
+.letters {
     width: 800px;
     color: grey;
     height: 40px;
@@ -77,32 +65,91 @@ button{
     align-items: center;
 }
 
-.moves{
-    height: 800px;
-    width: 150px;
-    background-color: grey;
-    display: flex;
-}
-
-
+/* Button container */
 .button-container {
     display: flex;
     gap: 20px;                /* Adds space between the buttons */
 }
 
-button {
-    width: 200px;
-    height: 100px;
+/* Captured pieces container */
+.captured-container {
     display: flex;
+    justify-content: left;
     align-items: center;
-    justify-content: center;
+    gap: 5px;                /* Space between pieces */
+    margin-top: 10px;
 }
 
+.captured {
+    background-position: center;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;      /* Rounded pieces */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Scores display */
+.score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffbf00;          /* Gold color for scores */
+    margin-left: 10px;
+}
+
+/* Game over and menu styling */
+.win-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333333; /* Slightly lighter for contrast */
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+}
+
+.win-container h1 {
+    color: #ff6b6b;           /* Attention-grabbing red */
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.win-container button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.win-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* General button styling */
+button {
+    background-color: #007bff; /* Blue buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.1);     /* Slightly enlarge button */
+}
+
+/* Miscellaneous text styling */
 .text {
     font-size: 20px;
     color: #646cff;
-}
-
-.players{
-    font-size: 25px;
 }

@@ -1,4 +1,3 @@
-<<<<<<< Updated upstream
 import wP from "../../images/wP.png"
 import wR from "../../images/wR.png"
 import wQ from "../../images/wQ.png"
@@ -11,10 +10,6 @@ import bQ from "../../images/bQ.png"
 import bN from "../../images/bN.png"
 import bB from "../../images/bB.png"
 import bK from "../../images/bK.png"
-=======
-export const BACKEND = 'ws:localhost:8080'
->>>>>>> Stashed changes
-
 export const BACKEND = 'wss://chess-u5c0.onrender.com'
 
 const images = new Map<string, string>()
