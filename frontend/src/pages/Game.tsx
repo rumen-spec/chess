@@ -194,6 +194,7 @@ function Game() {
                     tile.removeChild(tile.firstChild as ChildNode);
                     const queen = document.createElement("div");
                     queen.id = tile.id;
+                    queen.className = "chess-piece";
                     white? queen.style.backgroundImage = `url("${images.get("wQ")}")`: queen.style.backgroundImage = `url("${images.get("bQ")}")`
                     tile.appendChild(queen)
                 }
