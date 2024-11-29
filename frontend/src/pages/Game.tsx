@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import {useWebSocketContext} from "./WebSocketContext.tsx";
 import resources from "./consts.ts";
 import {useNavigate} from "react-router-dom";
-import check from '../../images/check.png';
+// import check from '../../images/check.png';
 import dot from '../../images/dot.png';
 import dot_piece from "../../images/dot_piece.png";
 
