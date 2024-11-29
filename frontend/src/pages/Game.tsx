@@ -349,6 +349,8 @@ function Game() {
                         king_square.style.removeProperty('background-image');
                     }
 
+                    // @ts-ignore
+                    console.log(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2))
                     if(white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active.id[1] == "8"){
                         // @ts-ignore
                         active.removeChild(active.firstChild)
@@ -362,7 +364,7 @@ function Game() {
                             // @ts-ignore
                             move: {from: previous.id, to: active.id, promotion: 1}
                         })
-                    }else if(!white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active && active.id[1] == "1"){
+                    }else if(!white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active.id[1] == "1"){
                         // @ts-ignore
                         active.removeChild(active.firstChild)
                         const queen: HTMLDivElement = document.createElement("div");
