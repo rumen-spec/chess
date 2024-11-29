@@ -83,6 +83,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
+                            console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
+                            // @ts-ignore
                             if (_tile.firstChild.style.backgroundImage == `url(${images.get("wK")})`) {
                                 _tile.style.backgroundImage = `url(${images.get("bP")})`;
                                 king.current = _tile.id
@@ -93,6 +95,8 @@ function Game() {
                     for (let tile in document.getElementsByClassName('tile')) {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
+                            // @ts-ignore
+                            console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
                             // @ts-ignore
                             if (_tile.firstChild.style.backgroundImage == `url(${images.get("bK")})`) {
                                 _tile.style.backgroundImage = `url(${images.get("bP")})`;
