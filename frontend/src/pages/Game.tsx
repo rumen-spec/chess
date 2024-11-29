@@ -351,7 +351,6 @@ function Game() {
                     console.log(active.id, scores.get(active.style.backgroundImage))
 
                     if(white && active && active.id[1] == "8"){
-                        active.style.ba
                         sendJsonMessage({
                             type: "move",
                             // @ts-ignore
