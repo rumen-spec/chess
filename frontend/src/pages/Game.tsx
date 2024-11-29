@@ -350,7 +350,7 @@ function Game() {
                     }
 
                     // @ts-ignore
-                    console.log("hi: " + active.firstChild.style.backgroundImage);
+                    console.log("hi: " + active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2));
                     console.log("hi: " + active)
 
                     if(white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active.id[1] == "8"){
