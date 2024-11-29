@@ -21,35 +21,11 @@
     gap: 20px;                /* Adds space between title and buttons */
 }
 
-.captured {
-    background-position: center;
-    background-size: cover;
-    align-items: center;
-}
-
-.win-container{
-    width: 200px;
-    height: 900px;
-    align-content: center;
-}
-button{
-    color: white;
-}
-.captured-container{
-    display: flex;
-    padding-bottom: 5px;
-}
-
-.score{
-    font-size: 23px;
+.players {
+    color: #61dafb; /* React blue for players */
+    font-size: 20px;
     font-weight: bold;
-    color: white;
-    padding-left: 10px;
-}
-
-.players{
-    color: white;
-    font-family: "Times New Roman";
+    margin: 10px 0;
 }
 .game-title {
     font-size: 30px;
@@ -89,15 +65,82 @@ button{
     display: flex;
     gap: 20px;                /* Adds space between the buttons */
 }
-
-button {
-    width: 200px;
-    height: 100px;
+/* Captured pieces container */
+.captured-container {
     display: flex;
+    justify-content: left;
     align-items: center;
-    justify-content: center;
+    gap: 5px; /* Space between pieces */
+    margin-top: 10px;
 }
 
+.captured {
+    background-position: center;
+    background-size: cover;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%; /* Rounded pieces */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Scores display */
+.score {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffbf00; /* Gold color for scores */
+    margin-left: 10px;
+}
+
+/* Game over and menu styling */
+.win-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #333333; /* Slightly lighter for contrast */
+    border-radius: 12px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+}
+
+.win-container h1 {
+    color: #ff6b6b; /* Attention-grabbing red */
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.win-container button {
+    background-color: #4caf50; /* Green button */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.win-container button:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+/* Buttons */
+button {
+    background-color: #007bff; /* Blue buttons */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s, background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.1); /* Slightly enlarge button */
+}
 .text {
     font-size: 20px;
     color: #646cff;
@@ -105,4 +148,7 @@ button {
 
 .players{
     font-size: 25px;
+}
+* {
+    transition: all 0.3s ease-in-out;
 }
