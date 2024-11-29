@@ -1,20 +1,19 @@
 import {WebSocket} from "ws";
 import {Chess, Square} from "chess.js";
 import {AVAILABLE_MOVES, CHECK, GAME_OVER, INIT_GAME, MOVE} from "./messages";
+import {GameManager} from "./GameManager";
 
 export class Game {
     player1: WebSocket
     player2: WebSocket
     board: Chess
     private moves: string[]
-    private startTime: Date;
 
     constructor(player1: WebSocket, player2: WebSocket) {
         this.player1 = player1;
         this.player2 = player2;
         this.board = new Chess();
         this.moves = [];
-        this.startTime = new Date();
 
         this.player1.send(JSON.stringify({
             type: INIT_GAME,
@@ -34,12 +33,12 @@ export class Game {
         socket.send(JSON.stringify({
             type: AVAILABLE_MOVES,
             square: position,
-            payload: this.board.moves({square: position})
+            payload: this.board.moves({square:position})
         }))
     }
 
 
-    makeMove(socket: WebSocket, move: { from: string, to: string }, ...args: any[]) {
+    makeMove(socket: WebSocket, move: { from: string, to: string, promotion: number }) {
         if(this.moves.length % 2 === 0 && socket !== this.player1){
             return;
         }
@@ -47,7 +46,21 @@ export class Game {
             return;
         }
         try{
-            this.board.move(move);
+            if(move.promotion == 0){
+                const flag: string = this.board.move({from:move.from, to:move.to}).flags
+                if(flag == "e"){
+                    this.player1.send(JSON.stringify({
+                        type:"en-passant",
+                        move: {from: move.from, to: move.to}
+                    }))
+                    this.player2.send(JSON.stringify({
+                        type:"en-passant",
+                        move: {from: move.from, to: move.to}
+                    }))
+                }
+            }else{
+                this.board.move({from:move.from, to:move.to, promotion: "q"})
+            }
             this.moves.push(JSON.stringify(move));
         }catch(e){
             console.error(e);
@@ -79,7 +92,6 @@ export class Game {
             }
         }
         if(this.board.isGameOver()){
-
             if(this.board.isCheckmate()) {
                 this.player1.send(JSON.stringify({
                     type: GAME_OVER,
@@ -111,6 +123,7 @@ export class Game {
                     }
                 }))
             }
+            this.board.clear();
             return;
         }
     }

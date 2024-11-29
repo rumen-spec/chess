@@ -23,7 +23,7 @@ export function WebSocketProvider({ children }: WebSocketProviderProps) {
         onMessage: (msg) => { messages.current = JSON.parse(msg.data)} // Ensure msg.data gets assigned to message correctly
     });
 
-    console.log(messages)
+    console.log(gamestate)
 
         return (
             <WebSocketContext.Provider value={{sendJsonMessage, messages, gamestate}}>

@@ -9,7 +9,6 @@ class Game {
         this.player2 = player2;
         this.board = new chess_js_1.Chess();
         this.moves = [];
-        this.startTime = new Date();
         this.player1.send(JSON.stringify({
             type: messages_1.INIT_GAME,
             payload: {
@@ -30,7 +29,7 @@ class Game {
             payload: this.board.moves({ square: position })
         }));
     }
-    makeMove(socket, move, ...args) {
+    makeMove(socket, move) {
         if (this.moves.length % 2 === 0 && socket !== this.player1) {
             return;
         }
@@ -38,7 +37,22 @@ class Game {
             return;
         }
         try {
-            this.board.move(move);
+            if (move.promotion == 0) {
+                const flag = this.board.move({ from: move.from, to: move.to }).flags;
+                if (flag == "e") {
+                    this.player1.send(JSON.stringify({
+                        type: "en-passant",
+                        move: { from: move.from, to: move.to }
+                    }));
+                    this.player2.send(JSON.stringify({
+                        type: "en-passant",
+                        move: { from: move.from, to: move.to }
+                    }));
+                }
+            }
+            else {
+                this.board.move({ from: move.from, to: move.to, promotion: "q" });
+            }
             this.moves.push(JSON.stringify(move));
         }
         catch (e) {
@@ -100,6 +114,7 @@ class Game {
                     }
                 }));
             }
+            this.board.clear();
             return;
         }
     }

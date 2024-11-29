@@ -1,6 +1,6 @@
 import { WebSocket} from "ws";
 import {Game} from './Game'
-import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE} from "./messages";
+import {AVAILABLE_MOVES, CANCEL, DISCONNECT, GAME_OVER, INIT_GAME, MOVE} from "./messages";
 
 export class GameManager {
     private games: Game[];
@@ -69,6 +69,13 @@ export class GameManager {
                     }
                 }else{
                     this.users.splice(this.users.indexOf(socket), 1);
+                }
+            }
+
+            if(message.type == GAME_OVER){
+                const game = this.games.find((game) => game.player1 == socket || game.player2 == socket)
+                if(game){
+                    this.games.splice(this.games.indexOf(game), 1);
                 }
             }
 

@@ -40,7 +40,6 @@ function Game() {
 
     function handleMouseDown(e:any) {
         const element = e.target as HTMLElement;
-        console.log("i");
         if (element.classList.contains('chess-piece')) {
             element.style.border = '3px solid white';
             element.style.backgroundColor = 'rgb(173,193,58)';
@@ -129,10 +128,16 @@ function Game() {
                     setGameOver(message.payload.how)
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
+                    sendJsonMessage({
+                        type: "game_over"
+                    });
                 }else{
                     setGameOver(message.payload.how)
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
+                    sendJsonMessage({
+                        type: "game_over"
+                    });
                 }
             }
 
@@ -142,6 +147,13 @@ function Game() {
                     chessboardElement.style.pointerEvents = "none";
                     setGameOver("Opponent disconnected");
                 }
+            }
+            if(message.type === "en-passant"){
+                const piece_id = message.move.to[0] + message.move.from[1];
+                const square = document.getElementById(piece_id) as HTMLElement;
+                const piece = square.firstChild as ChildNode;
+                square.removeChild(piece);
+                if()
             }
 
             if (message.type === "move") {
@@ -335,7 +347,7 @@ function Game() {
                     sendJsonMessage({
                         type: "move",
                         // @ts-ignore
-                        move: {from: previous.id, to: active.id}
+                        move: {from: previous.id, to: active.id, promotion: 0}
                     })
 
                     // @ts-ignore

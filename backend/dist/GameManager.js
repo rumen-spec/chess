@@ -47,6 +47,26 @@ class GameManager {
                     this.pendingUser = socket;
                 }
             }
+            if (message.type == messages_1.CANCEL) {
+                if (this.pendingUser == socket) {
+                    if (this.users.length != 0) {
+                        this.pendingUser = this.users[0];
+                        this.users.splice(0, 1);
+                    }
+                    else {
+                        this.pendingUser = null;
+                    }
+                }
+                else {
+                    this.users.splice(this.users.indexOf(socket), 1);
+                }
+            }
+            if (message.type == messages_1.GAME_OVER) {
+                const game = this.games.find((game) => game.player1 == socket || game.player2 == socket);
+                if (game) {
+                    this.games.splice(this.games.indexOf(game), 1);
+                }
+            }
             if (message.type === messages_1.MOVE) {
                 const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
                 if (game) {
