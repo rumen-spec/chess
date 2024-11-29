@@ -139,6 +139,23 @@ function Game() {
                 }
             }
 
+            if(message.type === "en-passant"){
+                const piece_id = message.move.to[0] + message.move.from[1];
+                const square = document.getElementById(piece_id) as HTMLElement;
+                const piece = square.firstChild as HTMLElement;
+                square.removeChild(piece as ChildNode);
+                if(message.turn){
+                    SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
+                    // @ts-ignore
+                    setUser_score((prevState => prevState + scores.get("P")))
+                }else{
+                    SetOpponentCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
+                    // @ts-ignore
+                    setUser_score((prevState => prevState + scores.get("P")))
+                }
+            }
+
+
             if(message.type === "disconnect"){
                 if(!game_over)setGameOver("Opponent disconnected");
             }
@@ -330,11 +347,25 @@ function Game() {
                         king_square.style.removeProperty('background-image');
                     }
 
-                    sendJsonMessage({
-                        type: "move",
-                        // @ts-ignore
-                        move: {from: previous.id, to: active.id}
-                    })
+                    if(white && active && scores.get(active.style.backgroundImage) == 1 && active.id[1] == "8"){
+                        sendJsonMessage({
+                            type: "move",
+                            // @ts-ignore
+                            move: {from: previous.id, to: active.id, promotion: 1}
+                        })
+                    }else if(!white && active && scores.get(active.style.backgroundImage) == 1 && active.id[1] == "1"){
+                        sendJsonMessage({
+                            type: "move",
+                            // @ts-ignore
+                            move: {from: previous.id, to: active.id, promotion: 1}
+                        })
+                    }else{
+                        sendJsonMessage({
+                            type: "move",
+                            // @ts-ignore
+                            move: {from: previous.id, to: active.id, promotion: 0}
+                        })
+                    }
 
                     // @ts-ignore
                     active.firstChild.style.removeProperty('background-color');
