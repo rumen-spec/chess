@@ -4,7 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import {useWebSocketContext} from "./WebSocketContext.tsx";
 import resources from "./consts.ts";
 import {useNavigate} from "react-router-dom";
-// import check from '../../images/check.png';
+import check from '../../images/check.png';
 import dot from '../../images/dot.png';
 import dot_piece from "../../images/dot_piece.png";
 
@@ -85,8 +85,8 @@ function Game() {
                             // @ts-ignore
                             console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("wK")})`) {
-                                _tile.style.backgroundImage = `url(${images.get("bP")})`;
+                            if (_tile.firstChild.style.backgroundImage == `url("${images.get("wK")}")`) {
+                                _tile.style.backgroundImage = `url("${check}")`;
                                 king.current = _tile.id
                             }
                         }
@@ -96,10 +96,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
-                            // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("bK")})`) {
-                                _tile.style.backgroundImage = `url(${images.get("bP")})`;
+                            if (_tile.firstChild.style.backgroundImage == `url("${images.get("bK")}")`) {
+                                _tile.style.backgroundImage = `url("${check}")`;
                                 king.current = _tile.id
                             }
                         }
