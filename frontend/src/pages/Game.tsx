@@ -84,7 +84,7 @@ function Game() {
                         if (_tile.firstChild != null) {
                             // @ts-ignore
                             if (_tile.firstChild.style.backgroundImage == `url(${images.get("wK")})`) {
-                                _tile.style.backgroundImage = `url(${check})`;
+                                _tile.style.backgroundImage = `url(${images.get("bP")})`;
                                 king.current = _tile.id
                             }
                         }
@@ -95,7 +95,7 @@ function Game() {
                         if (_tile.firstChild != null) {
                             // @ts-ignore
                             if (_tile.firstChild.style.backgroundImage == `url(${images.get("bK")})`) {
-                                _tile.style.backgroundImage = `url(${check})`;
+                                _tile.style.backgroundImage = `url(${images.get("bP")})`;
                                 king.current = _tile.id
                             }
                         }
