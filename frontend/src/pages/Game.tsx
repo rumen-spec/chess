@@ -83,7 +83,7 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(wK)})`) {
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("wK")})`) {
                                 _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
@@ -94,7 +94,7 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get(bK)})`) {
+                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("bK")})`) {
                                 _tile.style.backgroundImage = `url(${check})`;
                                 king.current = _tile.id
                             }
@@ -351,6 +351,7 @@ function Game() {
                     console.log(active.id, scores.get(active.style.backgroundImage))
 
                     if(white && active && active.id[1] == "8"){
+                        active.style.ba
                         sendJsonMessage({
                             type: "move",
                             // @ts-ignore
