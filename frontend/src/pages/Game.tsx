@@ -349,11 +349,9 @@ function Game() {
                         king_square.style.removeProperty('background-image');
                     }
 
-                    // @ts-ignore
-                    console.log("hi: " + scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)));
-                    console.log("hi: " + active)
 
-                    if(white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active.id[1] == "8"){
+                    // @ts-ignore
+                    if(white && active && scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)) == 1 && active.id[1] == "8"){
                         // @ts-ignore
                         active.removeChild(active.firstChild)
                         const queen: HTMLDivElement = document.createElement("div");
@@ -366,25 +364,27 @@ function Game() {
                             // @ts-ignore
                             move: {from: previous.id, to: active.id, promotion: 1}
                         })
-                    }else if(!white && active && scores.get(active.style.backgroundImage.substring(5, active.style.backgroundImage.length-2)) == 1 && active.id[1] == "1"){
-                        // @ts-ignore
-                        active.removeChild(active.firstChild)
-                        const queen: HTMLDivElement = document.createElement("div");
-                        queen.id = active.id;
-                        queen.style.backgroundImage = `url("${images.get("bQ")}")`
-                        queen.className = "chess-piece";
-                        active.appendChild(queen)
-                        sendJsonMessage({
-                            type: "move",
-                            // @ts-ignore
-                            move: {from: previous.id, to: active.id, promotion: 1}
-                        })
-                    }else{
-                        sendJsonMessage({
-                            type: "move",
-                            // @ts-ignore
-                            move: {from: previous.id, to: active.id, promotion: 0}
-                        })
+                    }else { // @ts-ignore
+                        if(!white && active && scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)) == 1 && active.id[1] == "1"){
+                                                // @ts-ignore
+                                                active.removeChild(active.firstChild)
+                                                const queen: HTMLDivElement = document.createElement("div");
+                                                queen.id = active.id;
+                                                queen.style.backgroundImage = `url("${images.get("bQ")}")`
+                                                queen.className = "chess-piece";
+                                                active.appendChild(queen)
+                                                sendJsonMessage({
+                                                    type: "move",
+                                                    // @ts-ignore
+                                                    move: {from: previous.id, to: active.id, promotion: 1}
+                                                })
+                                            }else{
+                                                sendJsonMessage({
+                                                    type: "move",
+                                                    // @ts-ignore
+                                                    move: {from: previous.id, to: active.id, promotion: 0}
+                                                })
+                                            }
                     }
 
                     // @ts-ignore
