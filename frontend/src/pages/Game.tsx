@@ -18,7 +18,6 @@ function Game() {
     const previousmoves = useRef<string[]>([]);
     const [white, setWhite] = useState<boolean>(true);
     let moves: string[] = [];
-    const movelist = useRef<string[]>([]);
     const {messages, sendJsonMessage,gamestate} = useWebSocketContext()
     const [UserCapturedPieces, SetUserCapturedPieces] = useState<string[]>([])
     const [OpponentCapturedPieces, SetOpponentCapturedPieces] = useState<string[]>([])
@@ -83,8 +82,10 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("wK")})`) {
-                                _tile.style.backgroundImage = `url(${check})`;
+                            console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
+                            // @ts-ignore
+                            if (_tile.firstChild.style.backgroundImage == `url("${images.get("wK")}")`) {
+                                _tile.style.backgroundImage = `url("${check}")`;
                                 king.current = _tile.id
                             }
                         }
@@ -94,8 +95,8 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            if (_tile.firstChild.style.backgroundImage == `url(${images.get("bK")})`) {
-                                _tile.style.backgroundImage = `url(${check})`;
+                            if (_tile.firstChild.style.backgroundImage == `url("${images.get("bK")}")`) {
+                                _tile.style.backgroundImage = `url("${check}")`;
                                 king.current = _tile.id
                             }
                         }
@@ -141,17 +142,18 @@ function Game() {
 
             if(message.type === "en-passant"){
                 const piece_id = message.move.to[0] + message.move.from[1];
-                const square = document.getElementById(piece_id) as HTMLElement;
-                const piece = square.firstChild as HTMLElement;
+                const square = document.getElementById(piece_id) as HTMLDivElement;
+                const piece = square.firstChild as HTMLDivElement;
+                console.log(square)
                 square.removeChild(piece as ChildNode);
                 if(message.turn){
                     SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
-                    setUser_score((prevState => prevState + scores.get("P")))
+                    setUser_score((prevState => prevState + scores.get(images.get("wP"))))
                 }else{
                     SetOpponentCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
-                    setUser_score((prevState => prevState + scores.get("P")))
+                    setOpponent_score((prevState => prevState + scores.get(images.get("wP"))))
                 }
             }
 
@@ -163,8 +165,6 @@ function Game() {
             if (message.type === "move") {
                 const starting_tile = document.getElementById(message.payload.from) as HTMLDivElement;
                 const ending_tile = document.getElementById(message.payload.to) as HTMLDivElement;
-
-                movelist.current.push(message.payload.from + '→' + message.payload.to);
 
                 const chessboard = document.getElementById('chessboard') as HTMLElement;
                 chessboard.style.pointerEvents = "all";
@@ -189,6 +189,16 @@ function Game() {
                 ending_tile.appendChild(piece);
                 activeTile.current = piece;
                 activeTile.current.style.backgroundColor = 'rgb(173,193,58)';
+
+                if(message.payload.promotion == 1){
+                    const tile = document.getElementById(message.payload.to) as HTMLDivElement;
+                    tile.removeChild(tile.firstChild as ChildNode);
+                    const queen = document.createElement("div");
+                    queen.id = tile.id;
+                    queen.className = "chess-piece";
+                    white? queen.style.backgroundImage = `url("${images.get("bQ")}")`: queen.style.backgroundImage = `url("${images.get("wQ")}")`
+                    tile.appendChild(queen)
+                }
 
 
                 if (message.payload.from == 'e1' && message.payload.to == 'g1') {
@@ -347,28 +357,42 @@ function Game() {
                         king_square.style.removeProperty('background-image');
                     }
 
-                    // @ts-ignore
-                    console.log(active.id, scores.get(active.style.backgroundImage))
 
-                    if(white && active && active.id[1] == "8"){
-                        active.style.ba
+                    // @ts-ignore
+                    if(white && active && scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)) == 1 && active.id[1] == "8"){
+                        // @ts-ignore
+                        active.removeChild(active.firstChild)
+                        const queen: HTMLDivElement = document.createElement("div");
+                        queen.id = active.id;
+                        queen.style.backgroundImage = `url("${images.get("wQ")}")`
+                        queen.className = "chess-piece";
+                        active.appendChild(queen)
                         sendJsonMessage({
                             type: "move",
                             // @ts-ignore
                             move: {from: previous.id, to: active.id, promotion: 1}
                         })
-                    }else if(!white && active && active.id[1] == "1"){
-                        sendJsonMessage({
-                            type: "move",
-                            // @ts-ignore
-                            move: {from: previous.id, to: active.id, promotion: 1}
-                        })
-                    }else{
-                        sendJsonMessage({
-                            type: "move",
-                            // @ts-ignore
-                            move: {from: previous.id, to: active.id, promotion: 0}
-                        })
+                    }else { // @ts-ignore
+                        if(!white && active && scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)) == 1 && active.id[1] == "1"){
+                                                // @ts-ignore
+                                                active.removeChild(active.firstChild)
+                                                const queen: HTMLDivElement = document.createElement("div");
+                                                queen.id = active.id;
+                                                queen.style.backgroundImage = `url("${images.get("bQ")}")`
+                                                queen.className = "chess-piece";
+                                                active.appendChild(queen)
+                                                sendJsonMessage({
+                                                    type: "move",
+                                                    // @ts-ignore
+                                                    move: {from: previous.id, to: active.id, promotion: 1}
+                                                })
+                                            }else{
+                                                sendJsonMessage({
+                                                    type: "move",
+                                                    // @ts-ignore
+                                                    move: {from: previous.id, to: active.id, promotion: 0}
+                                                })
+                                            }
                     }
 
                     // @ts-ignore
@@ -380,7 +404,7 @@ function Game() {
                 }
             }
         }
-    }, [message, sendJsonMessage, UserCapturedPieces])
+    }, [message, sendJsonMessage])
 
     function mainmenu(){
         gamestate.current = false

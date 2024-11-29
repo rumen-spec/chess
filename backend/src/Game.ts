@@ -61,7 +61,6 @@ export class Game {
                     }))
                 }
             }else{
-                console.error("hiiiiiii");
                 this.board.move({from:move.from, to:move.to, promotion: "q"})
             }
             this.moves.push(JSON.stringify(move));
