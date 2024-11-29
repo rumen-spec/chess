@@ -18,7 +18,6 @@ function Game() {
     const previousmoves = useRef<string[]>([]);
     const [white, setWhite] = useState<boolean>(true);
     let moves: string[] = [];
-    const movelist = useRef<string[]>([]);
     const {messages, sendJsonMessage,gamestate} = useWebSocketContext()
     const [UserCapturedPieces, SetUserCapturedPieces] = useState<string[]>([])
     const [OpponentCapturedPieces, SetOpponentCapturedPieces] = useState<string[]>([])
@@ -166,8 +165,6 @@ function Game() {
                 const starting_tile = document.getElementById(message.payload.from) as HTMLDivElement;
                 const ending_tile = document.getElementById(message.payload.to) as HTMLDivElement;
 
-                movelist.current.push(message.payload.from + '→' + message.payload.to);
-
                 const chessboard = document.getElementById('chessboard') as HTMLElement;
                 chessboard.style.pointerEvents = "all";
 
@@ -191,6 +188,15 @@ function Game() {
                 ending_tile.appendChild(piece);
                 activeTile.current = piece;
                 activeTile.current.style.backgroundColor = 'rgb(173,193,58)';
+
+                if(message.payload.promotion == 1){
+                    const tile = document.getElementById(message.payload.to) as HTMLDivElement;
+                    tile.removeChild(tile.firstChild as ChildNode);
+                    const queen = document.createElement("div");
+                    queen.id = tile.id;
+                    white? queen.style.backgroundImage = `url("${images.get("wQ")}")`: queen.style.backgroundImage = `url("${images.get("bQ")}")`
+                    tile.appendChild(queen)
+                }
 
 
                 if (message.payload.from == 'e1' && message.payload.to == 'g1') {
