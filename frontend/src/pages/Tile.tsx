@@ -8,7 +8,6 @@ interface Props{
 
 export default function Tile({num, id, image}: Props) {
 
-
      if(num%2==0){
         return(<div className='tile black-tile' id={id} >
             {image !== ''? <div style={{backgroundImage: `url("../../images/${image}.png")`}} className='chess-piece' id={id} key={image}></div> : <></>}

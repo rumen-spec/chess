@@ -153,7 +153,6 @@ function Game() {
                 const square = document.getElementById(piece_id) as HTMLElement;
                 const piece = square.firstChild as ChildNode;
                 square.removeChild(piece);
-                if()
             }
 
             if (message.type === "move") {
