@@ -347,6 +347,9 @@ function Game() {
                         king_square.style.removeProperty('background-image');
                     }
 
+                    // @ts-ignore
+                    console.log(active.id, scores.get(active.style.backgroundImage))
+
                     if(white && active && scores.get(active.style.backgroundImage) == 1 && active.id[1] == "8"){
                         sendJsonMessage({
                             type: "move",
