@@ -350,13 +350,13 @@ function Game() {
                     // @ts-ignore
                     console.log(active.id, scores.get(active.style.backgroundImage))
 
-                    if(white && active && scores.get(active.style.backgroundImage) == 1 && active.id[1] == "8"){
+                    if(white && active && active.id[1] == "8"){
                         sendJsonMessage({
                             type: "move",
                             // @ts-ignore
                             move: {from: previous.id, to: active.id, promotion: 1}
                         })
-                    }else if(!white && active && scores.get(active.style.backgroundImage) == 1 && active.id[1] == "1"){
+                    }else if(!white && active && active.id[1] == "1"){
                         sendJsonMessage({
                             type: "move",
                             // @ts-ignore
