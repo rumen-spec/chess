@@ -153,7 +153,7 @@ function Game() {
                 }else{
                     SetOpponentCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
-                    setUser_score((prevState => prevState + scores.get(images.get("wP"))))
+                    setOpponent_score((prevState => prevState + scores.get(images.get("wP"))))
                 }
             }
 
