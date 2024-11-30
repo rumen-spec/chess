@@ -142,9 +142,10 @@ function Game() {
 
             if(message.type === "en-passant"){
                 const piece_id = message.move.to[0] + message.move.from[1];
-                const square = document.getElementById(piece_id) as HTMLElement;
-                const piece = square.firstChild as HTMLElement;
-                square.removeChild(piece as ChildNode);
+                const square = document.getElementById(piece_id) as HTMLDivElement;
+                const piece = square.firstChild as HTMLDivElement;
+                console.log(square)
+                // square.removeChild(piece as ChildNode);
                 if(message.turn){
                     SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
@@ -195,7 +196,7 @@ function Game() {
                     const queen = document.createElement("div");
                     queen.id = tile.id;
                     queen.className = "chess-piece";
-                    white? queen.style.backgroundImage = `url("${images.get("wQ")}")`: queen.style.backgroundImage = `url("${images.get("bQ")}")`
+                    white? queen.style.backgroundImage = `url("${images.get("bQ")}")`: queen.style.backgroundImage = `url("${images.get("wQ")}")`
                     tile.appendChild(queen)
                 }
 
