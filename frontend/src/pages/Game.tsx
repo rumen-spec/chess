@@ -149,11 +149,11 @@ function Game() {
                 if(message.turn){
                     SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
-                    setUser_score((prevState => prevState + scores.get("P")))
+                    setUser_score((prevState => prevState + scores.get(images.get("wP"))))
                 }else{
                     SetOpponentCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
-                    setUser_score((prevState => prevState + scores.get("P")))
+                    setUser_score((prevState => prevState + scores.get(images.get("wP"))))
                 }
             }
 
