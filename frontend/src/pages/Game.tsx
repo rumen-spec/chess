@@ -145,7 +145,7 @@ function Game() {
                 const square = document.getElementById(piece_id) as HTMLDivElement;
                 const piece = square.firstChild as HTMLDivElement;
                 console.log(square)
-                // square.removeChild(piece as ChildNode);
+                square.removeChild(piece as ChildNode);
                 if(message.turn){
                     SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
@@ -404,7 +404,7 @@ function Game() {
                 }
             }
         }
-    }, [message, sendJsonMessage, UserCapturedPieces])
+    }, [message, sendJsonMessage])
 
     function mainmenu(){
         gamestate.current = false
