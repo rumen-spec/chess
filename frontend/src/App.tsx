@@ -5,9 +5,8 @@ import {WebSocketProvider} from "./pages/WebSocketContext.tsx";
 import Home from "./pages/Home.tsx";
 import {useWebSocketContext} from "./pages/WebSocketContext.tsx";
 
-
+const {gamestate} = useWebSocketContext();
 function App() {
-    const {gamestate} = useWebSocketContext();
     console.log(gamestate + "  " + gamestate.current);
     return(
       <BrowserRouter>
@@ -19,7 +18,7 @@ function App() {
           }/>
           <Route path="/game" element={
               <WebSocketProvider>
-                  {gamestate.current? <Game/>: <Home/>}
+                  {false? <Game/>: <Home/>}
               </WebSocketProvider>
           }/>
           </Routes>
