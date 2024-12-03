@@ -10,10 +10,52 @@ import bQ from "../../images/bQ.png"
 import bN from "../../images/bN.png"
 import bB from "../../images/bB.png"
 import bK from "../../images/bK.png"
+import capture from "../../sounds/capture.mp3"
+import move from "../../sounds/move.mp3"
+import check from "../../sounds/check.mp3"
+import castle from "../../sounds/castle.mp3"
+import notify from "../../sounds/notify.mp3"
+import promote from "../../sounds/promote.mp3"
+import end from "../../sounds/game-end.mp3"
+import win from "../../sounds/win.mp3"
+
 export const BACKEND = 'wss://chess-u5c0.onrender.com'
 
 const images = new Map<string, string>()
 const scores = new Map<string, number>()
+const sounds = (sound: string, mark: boolean) => {
+    let file = "fake";
+    switch(sound) {
+        case "CAPTURE":
+            file = capture;
+            break;
+        case "MOVE":
+            file = move;
+            break;
+        case "WIN":
+            file = win;
+            break;
+        case "CHECK":
+            file = check;
+            break;
+        case "CASTLE":
+            file = castle;
+            break;
+        case "END":
+            file = end;
+            break;
+        case "NOTIFY":
+            file = notify;
+            break;
+        case "PROMOTE":
+            file = promote;
+            break;
+    }
+    if(!mark){
+        const player = new Audio(file);
+        player.play();
+    }
+}
 
 scores.set(wP, 1);
 scores.set(bP, 1);
@@ -41,5 +83,5 @@ images.set('bQ', bQ)
 images.set('bN', bN)
 images.set('bB', bB)
 
-const resources = {images,scores}
+const resources = {images,scores, sounds}
 export default resources;

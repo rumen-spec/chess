@@ -2,7 +2,7 @@
 body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: #1e1e2f;
+    background-color: #1a1a1f;
     color: #ffffff;
 }
 
@@ -23,7 +23,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(135deg, #0d1117, #3b3b6b);
+    /*background: linear-gradient(135deg, #0d1117, #3b3b6b);*/
     opacity: 0.8;
     z-index: -1;
 }
@@ -70,34 +70,25 @@ body {
 }
 
 .play-online {
-    background-color: #4caf50;
+    background-color: #ffbf00;
     color: white;
 }
 
 .play-online:hover {
-    background-color: #45a049;
+    background-color: #febe00;
     transform: scale(1.05);
 }
 
 .play-ai {
-    background-color: #2196f3;
+    background-color: #ffbf00;
     color: white;
 }
 
 .play-ai:hover {
-    background-color: #1e88e5;
+    background-color: #febe00;
     transform: scale(1.05);
 }
 
-.join-room {
-    background-color: #ff5722;
-    color: white;
-}
-
-.join-room:hover {
-    background-color: #e64a19;
-    transform: scale(1.05);
-}
 
 /* Leaderboard */
 .home-leaderboard {

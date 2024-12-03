@@ -25,11 +25,10 @@ function Game() {
     const [opponent_score, setOpponent_score] = useState<number>(0)
     const [game_over, setGameOver] = useState<string>();
     const message = messages.current
-    const nav = useNavigate();
-    const {images, scores} = resources;
+    const navigate = useNavigate();
+    const {images, scores, sounds} = resources;
+    let mark = true;
 
-
-    if(!gamestate.current) nav('/');
 
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
@@ -61,6 +60,7 @@ function Game() {
 
     useEffect(() => {
         if (message!==undefined){// if another user joins game
+            mark = false;
             if (message.type === "init_game") {
 
                 if (message.payload.color == 'black') {
@@ -77,6 +77,7 @@ function Game() {
             }
 
             if (message.type === "check") {
+                sounds("CHECK", false);
                 if (white) {
                     for (let tile in document.getElementsByClassName('tile')) {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
@@ -107,19 +108,25 @@ function Game() {
             if (message.type === "available_moves") {
                 moves = message.payload;
                 for (let i = 0; i < moves.length; i++) {
+                    console.log(moves[i], moves[i] == '8=');
                     if (moves[i] == 'O-O' && white) {
                         moves[i] = 'g1';
                     }
-                    if (moves[i] == 'O-O' && !white) {
+                    else if (moves[i] == 'O-O' && !white) {
                         moves[i] = 'g8';
                     }
-                    if (moves[i] == 'O-O-O' && white) {
+                    else if (moves[i] == 'O-O-O' && white) {
                         moves[i] = 'c1';
                     }
-                    if (moves[i] == 'O-O-O' && !white) {
+                    else if (moves[i] == 'O-O-O' && !white) {
                         moves[i] = 'c8';
-                    } else if (moves[i].length !== 2 && moves[i][1] != 'x') {
+                    }
+                    else if (moves[i].length !== 2 && moves[i][1] != 'x') {
                         moves[i] = moves[i][1] + moves[i][2]
+                        if(activeTile.current != ""){
+                            if (moves[i] == '8=') moves[i] = moves[i] = activeTile.current.id[0] + "8";
+                            else if (moves[i] == '1=') moves[i] = moves[i] = activeTile.current.id[0] + "1";
+                        }
                     } else if (moves[i][1] == 'x') {
                         moves[i] = moves[i][2] + moves[i][3]
                     }
@@ -131,10 +138,14 @@ function Game() {
             if(message.type === "game_over"){
                 if(white && message.payload.winner == "white"){
                     setGameOver(message.payload.how)
+                    if(message.payload.winner == "white") sounds("WIN", false);
+                    else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
                 }else{
                     setGameOver(message.payload.how)
+                    if(message.payload.winner != "white") sounds("WIN", false);
+                    else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
                 }
@@ -146,6 +157,7 @@ function Game() {
                 const piece = square.firstChild as HTMLDivElement;
                 console.log(square)
                 square.removeChild(piece as ChildNode);
+                sounds("CAPTURE", false);
                 if(message.turn){
                     SetUserCapturedPieces((prevState => [...prevState, piece.style.backgroundImage]))
                     // @ts-ignore
@@ -159,6 +171,7 @@ function Game() {
 
 
             if(message.type === "disconnect"){
+                sounds("END", false);
                 if(!game_over)setGameOver("Opponent disconnected");
             }
 
@@ -174,6 +187,7 @@ function Game() {
                 piece.id = ending_tile.id;
 
                 if (ending_tile.firstChild != null) {
+                    sounds("CAPTURE", false);
                     const pieces = document.getElementsByClassName('chess-piece');
                     for (let piecekey = 0; piecekey < pieces.length; piecekey++) {
                         // @ts-ignore
@@ -191,6 +205,7 @@ function Game() {
                 activeTile.current.style.backgroundColor = 'rgb(173,193,58)';
 
                 if(message.payload.promotion == 1){
+                    sounds("PROMOTION", false);
                     const tile = document.getElementById(message.payload.to) as HTMLDivElement;
                     tile.removeChild(tile.firstChild as ChildNode);
                     const queen = document.createElement("div");
@@ -202,6 +217,8 @@ function Game() {
 
 
                 if (message.payload.from == 'e1' && message.payload.to == 'g1') {
+                    sounds("CASTLE", mark)
+                    mark = true;
                     const rooktile = document.getElementById('h1') as HTMLDivElement;
                     const castleTile = document.getElementById('f1') as HTMLDivElement;
                     if (rooktile.firstChild) {
@@ -210,6 +227,8 @@ function Game() {
                         castleTile.firstChild.id = 'f1'
                     }
                 } else if (message.payload.from == 'e1' && message.payload.to == 'c1') {
+                    sounds("CASTLE", mark)
+                    mark = true;
                     const rooktile = document.getElementById('a1') as HTMLDivElement;
                     const castleTile = document.getElementById('d1') as HTMLDivElement;
                     if (rooktile.firstChild) {
@@ -218,6 +237,8 @@ function Game() {
                         castleTile.firstChild.id = 'd1'
                     }
                 } else if (message.payload.from == 'e8' && message.payload.to == 'g8') {
+                    sounds("CASTLE", mark)
+                    mark = true;
                     const rooktile = document.getElementById('h8') as HTMLDivElement;
                     const castleTile = document.getElementById('f8') as HTMLDivElement;
                     if (rooktile.firstChild) {
@@ -226,6 +247,8 @@ function Game() {
                         castleTile.firstChild.id = 'f8'
                     }
                 } else if (message.payload.from == 'e8' && message.payload.to == 'c8') {
+                    sounds("CASTLE", mark)
+                    mark = true;
                     const rooktile = document.getElementById('a8') as HTMLDivElement;
                     const castleTile = document.getElementById('d8') as HTMLDivElement;
                     if (rooktile.firstChild) {
@@ -240,13 +263,14 @@ function Game() {
 
 
             function handlePossibleMoves(moves: string[]) {
+                console.log(moves)
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
-                    if (tile.firstChild != null) {
-                        tile.style.backgroundImage = `url(${dot_piece})`
-                    } else {
-                        tile.style.backgroundImage = `url(${dot})`
-                    }
+                        if (tile.firstChild != null) {
+                            tile.style.backgroundImage = `url(${dot_piece})`
+                        } else {
+                            tile.style.backgroundImage = `url(${dot})`
+                        }
                 }
 
                 if (activeTile.current == previousTile.current && activeTile.current != '') {
@@ -289,6 +313,8 @@ function Game() {
                     if(activeTile.current != "") {
                         // @ts-ignore
                         if (activeTile.current.id == 'g1' && previousTile.current.id == 'e1') {
+                            sounds("CASTLE", mark)
+                            mark = true;
                             const rooktile = document.getElementById('h1') as HTMLDivElement;
                             const castleTile = document.getElementById('f1') as HTMLDivElement;
                             if (rooktile.firstChild) {
@@ -298,6 +324,8 @@ function Game() {
                             }
                             // @ts-ignore
                         } else if (activeTile.current.id == 'c1' && previousTile.current.id == 'e1') {
+                            sounds("CASTLE", mark)
+                            mark = true;
                             const rooktile = document.getElementById('a1') as HTMLDivElement;
                             const castleTile = document.getElementById('d1') as HTMLDivElement;
                             if (rooktile.firstChild) {
@@ -307,6 +335,8 @@ function Game() {
                             }
                             // @ts-ignore
                         } else if (activeTile.current.id == 'g8' && previousTile.current.id == 'e8') {
+                            sounds("CASTLE", mark)
+                            mark = true;
                             const rooktile = document.getElementById('h8') as HTMLDivElement;
                             const castleTile = document.getElementById('f8') as HTMLDivElement;
                             if (rooktile.firstChild) {
@@ -317,6 +347,8 @@ function Game() {
 
                             // @ts-ignore
                         } else if (activeTile.current.id == 'c8' && previousTile.current.id == 'e8') {
+                            sounds("CASTLE", mark)
+                            mark = true;
                             const rooktile = document.getElementById('a8') as HTMLDivElement;
                             const castleTile = document.getElementById('d8') as HTMLDivElement;
                             if (rooktile.firstChild) {
@@ -339,6 +371,8 @@ function Game() {
                                 const capturedPiece = pieces[piecekey] as HTMLDivElement;
                                 SetUserCapturedPieces(prevState =>[...prevState,capturedPiece.style.backgroundImage])
                                 const score = scores.get(capturedPiece.style.backgroundImage.substring(5, capturedPiece.style.backgroundImage.length-2));
+                                sounds("CAPTURE", mark);
+                                mark = true;
                                 if(score) setUser_score(prevState => prevState+score)
                             }
                         }
@@ -364,6 +398,7 @@ function Game() {
                         active.removeChild(active.firstChild)
                         const queen: HTMLDivElement = document.createElement("div");
                         queen.id = active.id;
+                        sounds("PROMOTE", mark);
                         queen.style.backgroundImage = `url("${images.get("wQ")}")`
                         queen.className = "chess-piece";
                         active.appendChild(queen)
@@ -374,25 +409,27 @@ function Game() {
                         })
                     }else { // @ts-ignore
                         if(!white && active && scores.get(active.firstChild.style.backgroundImage.substring(5, active.firstChild.style.backgroundImage.length-2)) == 1 && active.id[1] == "1"){
-                                                // @ts-ignore
-                                                active.removeChild(active.firstChild)
-                                                const queen: HTMLDivElement = document.createElement("div");
-                                                queen.id = active.id;
-                                                queen.style.backgroundImage = `url("${images.get("bQ")}")`
-                                                queen.className = "chess-piece";
-                                                active.appendChild(queen)
-                                                sendJsonMessage({
-                                                    type: "move",
-                                                    // @ts-ignore
-                                                    move: {from: previous.id, to: active.id, promotion: 1}
-                                                })
-                                            }else{
-                                                sendJsonMessage({
-                                                    type: "move",
-                                                    // @ts-ignore
-                                                    move: {from: previous.id, to: active.id, promotion: 0}
-                                                })
-                                            }
+                            // @ts-ignore
+                            active.removeChild(active.firstChild)
+                            sounds("PROMOTE",mark)
+                            const queen: HTMLDivElement = document.createElement("div");
+                            queen.id = active.id;
+                            queen.style.backgroundImage = `url("${images.get("bQ")}")`
+                            queen.className = "chess-piece";
+                            active.appendChild(queen)
+                            sendJsonMessage({
+                                type: "move",
+                                // @ts-ignore
+                                move: {from: previous.id, to: active.id, promotion: 1}
+                            })
+                        }else{
+                            sounds("MOVE", mark)
+                            sendJsonMessage({
+                                type: "move",
+                                // @ts-ignore
+                                move: {from: previous.id, to: active.id, promotion: 0}
+                            })
+                        }
                     }
 
                     // @ts-ignore
@@ -408,7 +445,7 @@ function Game() {
 
     function mainmenu(){
         gamestate.current = false
-        nav("https://chess-bay-kappa.vercel.app/")
+        navigate("/")
     }
 
     return (
