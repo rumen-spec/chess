@@ -2,11 +2,13 @@ import {useWebSocketContext} from "./WebSocketContext.tsx";
 import {useNavigate} from "react-router-dom";
 import "./Home.css"
 import {useState} from "react";
+import resources from "./consts.ts";
 
 function Home (){
 
     const {sendJsonMessage, messages, gamestate} = useWebSocketContext();
     const[loading, setLoading] = useState(false);
+    const {sounds} = resources;
 
     const navigate = useNavigate();
 
@@ -20,6 +22,7 @@ function Home (){
     if(messages.current !== undefined){
         gamestate.current = true;
         if(messages.current.type == "init_game"){
+            sounds("NOTIFY", false)
             navigate('/game')
         }
     }
