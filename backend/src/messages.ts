@@ -5,3 +5,4 @@ export const AVAILABLE_MOVES = "available_moves";
 export const CHECK = "check";
 export const DISCONNECT = "disconnect";
 export const CANCEL = "cancel";
+export const CHESSBOT = "chessbot";

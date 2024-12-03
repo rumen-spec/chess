@@ -42,11 +42,13 @@ class Game {
                 if (flag == "e") {
                     this.player1.send(JSON.stringify({
                         type: "en-passant",
-                        move: { from: move.from, to: move.to }
+                        move: { from: move.from, to: move.to },
+                        turn: socket === this.player1
                     }));
                     this.player2.send(JSON.stringify({
                         type: "en-passant",
-                        move: { from: move.from, to: move.to }
+                        move: { from: move.from, to: move.to },
+                        turn: socket === this.player2
                     }));
                 }
             }
