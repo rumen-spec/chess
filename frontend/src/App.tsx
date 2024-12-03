@@ -15,7 +15,7 @@ function App() {
           }/>
           <Route path="/game" element={
               <WebSocketProvider>
-                      <Game/>
+                  <Game/>
               </WebSocketProvider>
           }/>
           </Routes>

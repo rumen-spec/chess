@@ -29,7 +29,6 @@ function Game() {
     const {images, scores, sounds} = resources;
     let mark = true;
 
-
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
         if (chessboardElement) {
