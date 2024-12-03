@@ -3,11 +3,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Game from "./pages/Game.tsx";
 import {WebSocketProvider} from "./pages/WebSocketContext.tsx";
 import Home from "./pages/Home.tsx";
-import {useWebSocketContext} from "./pages/WebSocketContext.tsx";
 
-const {gamestate} = useWebSocketContext();
 function App() {
-    console.log(gamestate + "  " + gamestate.current);
     return(
       <BrowserRouter>
           <Routes>
