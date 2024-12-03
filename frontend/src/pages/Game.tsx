@@ -138,10 +138,14 @@ function Game() {
             if(message.type === "game_over"){
                 if(white && message.payload.winner == "white"){
                     setGameOver(message.payload.how)
+                    if(message.payload.winner == "white") sounds("WIN", false);
+                    else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
                 }else{
                     setGameOver(message.payload.how)
+                    if(message.payload.winner != "white") sounds("WIN", false);
+                    else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
                 }

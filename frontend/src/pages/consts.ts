@@ -17,6 +17,7 @@ import castle from "../../sounds/castle.mp3"
 import notify from "../../sounds/notify.mp3"
 import promote from "../../sounds/promote.mp3"
 import end from "../../sounds/game-end.mp3"
+import win from "../../sounds/win.mp3"
 
 export const BACKEND = 'wss://chess-u5c0.onrender.com'
 
@@ -30,6 +31,9 @@ const sounds = (sound: string, mark: boolean) => {
             break;
         case "MOVE":
             file = move;
+            break;
+        case "WIN":
+            file = win;
             break;
         case "CHECK":
             file = check;
