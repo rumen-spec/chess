@@ -29,11 +29,6 @@ function Game() {
     const {images, scores, sounds} = resources;
     let mark = true;
 
-
-    console.log(gamestate.current)
-    if(!gamestate.current){
-        navigate("/");
-    }
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
         if (chessboardElement) {
