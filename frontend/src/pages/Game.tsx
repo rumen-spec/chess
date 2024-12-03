@@ -30,6 +30,7 @@ function Game() {
     let mark = true;
 
 
+    console.log(gamestate.current)
     if(!gamestate.current){
         navigate("/");
     }
