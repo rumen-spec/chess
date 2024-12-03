@@ -30,6 +30,9 @@ function Game() {
     let mark = true;
 
 
+    if(!gamestate.current){
+        navigate("/");
+    }
     useEffect(() => {
         const chessboardElement = document.getElementById('chessboard')
         if (chessboardElement) {

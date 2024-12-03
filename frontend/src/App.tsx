@@ -16,7 +16,6 @@ function App() {
           }/>
           <Route path="/game" element={
               <WebSocketProvider>
-                  <ProtectedRoute/>
                       <Game/>
               </WebSocketProvider>
           }/>
