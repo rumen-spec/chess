@@ -6,6 +6,7 @@ import Home from "./pages/Home.tsx";
 import {useWebSocketContext} from "./pages/WebSocketContext.tsx";
 
 const {gamestate} = useWebSocketContext();
+console.log(gamestate + "  " + gamestate.current);
 
 function App() {
     return(
