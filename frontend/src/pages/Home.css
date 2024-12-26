@@ -70,34 +70,25 @@ body {
 }
 
 .play-online {
-    background-color: #4caf50;
+    background-color: #ffbf00;
     color: white;
 }
 
 .play-online:hover {
-    background-color: #45a049;
+    background-color: #febe00;
     transform: scale(1.05);
 }
 
 .play-ai {
-    background-color: #2196f3;
+    background-color: #ffbf00;
     color: white;
 }
 
 .play-ai:hover {
-    background-color: #1e88e5;
+    background-color: #febe00;
     transform: scale(1.05);
 }
 
-.join-room {
-    background-color: #ff5722;
-    color: white;
-}
-
-.join-room:hover {
-    background-color: #e64a19;
-    transform: scale(1.05);
-}
 
 /* Leaderboard */
 .home-leaderboard {

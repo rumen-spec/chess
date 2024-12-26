@@ -1,15 +1,19 @@
 import { WebSocket} from "ws";
 import {Game} from './Game'
-import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE, CHESSBOT} from "./messages";
+import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE, CHESSBOT, GAME_OVER, PLAYER} from "./messages";
+import {ChessBot} from "./ChessBot";
+import {Chess, WHITE} from "chess.js";
 
 export class GameManager {
-    private games: Game[];
+    public games: Game[];
+    public botGames: ChessBot[]
     private pendingUser: WebSocket | null;
-    private users: WebSocket[];
-    private bot_users: WebSocket[];
+    public users: WebSocket[];
+    public bot_users: WebSocket[];
 
     constructor() {
         this.games = []
+        this.botGames = []
         this.pendingUser = null;
         this.users = [];
         this.bot_users = [];
@@ -17,10 +21,7 @@ export class GameManager {
 
     addUser(socket: WebSocket){
         this.users.push(socket);
-        if(this.bot_users.includes(socket)) this.addBothandler(socket);
-        else{
-            this.addHandler(socket);
-        }
+        this.Handler(socket);
     }
 
     removeUser(socket: WebSocket){
@@ -32,27 +33,51 @@ export class GameManager {
                     type: DISCONNECT
                 }));
 
+                console.log("before: ", this.games.length)
                 this.games.splice(this.games.indexOf(game), 1);
+                console.log("after: ", this.games.length)
+                return;
             }
             else if(game1){
                 game1.player1.send(JSON.stringify({
                     type: DISCONNECT
                 }));
 
+                console.log("before: ", this.games.length)
                 this.games.splice(this.games.indexOf(game1), 1);
+                console.log("after: ", this.games.length)
+                return
             }
 
-            this.users.splice(this.users.indexOf(socket), 1);
-            this.bot_users.splice(this.users.indexOf(socket), 1);
     }
 
-    private addHandler(socket: WebSocket){
+    private Handler(socket: WebSocket){
+        let bot = false;
+        let pvp = false;
         socket.on("message", (data) => {
             const message = JSON.parse(data.toString());
 
-            if(message.type == CHESSBOT){
-                this.bot_users.push(socket);
+            if(message.type == PLAYER){
+                pvp = true
+            }else if(message.type == CHESSBOT){
+                bot = true;
             }
+
+            if(message.type == GAME_OVER){
+                this.removeUser(socket);
+                bot = false;
+                pvp = false;
+            }
+
+            if(bot){
+                this.botHandler(message, socket)
+            }else if(pvp){
+                this.pvpHandler(message,socket)
+            }
+        })
+    }
+
+    private pvpHandler(message: any, socket: WebSocket){
             if (message.type === INIT_GAME) {
                 if(this.pendingUser && socket != this.pendingUser){
                     const game = new Game(this.pendingUser, socket)
@@ -90,20 +115,23 @@ export class GameManager {
                     game.available_moves(socket, message.position)
                 }
             }
-
-
-
-        })
     }
 
-    private addBothandler(socket: WebSocket){
-        socket.on("message", (data) => {
-            const message = JSON.parse(data.toString());
+    private botHandler(message: any, socket: WebSocket) {
+        console.log(message);
 
-            if(message.type == MOVE){
+        if (message.type == INIT_GAME) {
+            const game = new ChessBot(socket);
+            this.botGames.push(game);
+        }
 
-            }
-        })
+        if (message.type == AVAILABLE_MOVES) {
+            const game = this.botGames.find(game => game.player === socket)
+            game?.available_moves(message.position)
+        }
+        if (message.type == MOVE) {
+            const game = this.botGames.find(game => game.player === socket)
+            game?.makeMove(message.move)
+        }
     }
-
 }

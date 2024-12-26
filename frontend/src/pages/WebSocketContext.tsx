@@ -18,13 +18,11 @@ interface WebSocketProviderProps {
 export function WebSocketProvider({ children }: WebSocketProviderProps) {
     const messages = useRef<JSON>()
     const gamestate = useRef<boolean>(false)
+
     const { sendJsonMessage } = useWebSocket(BACKEND, {
         shouldReconnect: () => true,
         onMessage: (msg) => { messages.current = JSON.parse(msg.data)} // Ensure msg.data gets assigned to message correctly
     });
-
-    console.log(gamestate)
-
         return (
             <WebSocketContext.Provider value={{sendJsonMessage, messages, gamestate}}>
                 {children}

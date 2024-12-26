@@ -13,6 +13,7 @@
     align-items: center;      /* Centers the game vertically */
     height: 100vh;            /* Full height of the viewport */
     gap: 20px;                /* Adds space between the chessboard and the controls */
+
 }
 
 /* Chessboard container */
@@ -117,7 +118,7 @@
 }
 
 .win-container button {
-    background-color: #4caf50; /* Green button */
+    background-color: #ffbf00; /* Green button */
     color: white;
     border: none;
     padding: 10px 20px;
@@ -128,12 +129,12 @@
 }
 
 .win-container button:hover {
-    background-color: #45a049; /* Darker green on hover */
+    background-color: #febe00; /* Darker green on hover */
 }
 
 /* General button styling */
 button {
-    background-color: #007bff; /* Blue buttons */
+    background-color: #ffbf00; /* Blue buttons */
     color: white;
     border: none;
     border-radius: 5px;
@@ -144,12 +145,12 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #febe00; /* Darker blue on hover */
     transform: scale(1.1);     /* Slightly enlarge button */
 }
 
 /* Miscellaneous text styling */
 .text {
     font-size: 20px;
-    color: #646cff;
+    color: #ffbf00;
 }

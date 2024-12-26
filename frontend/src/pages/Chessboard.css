@@ -1,13 +1,11 @@
-#chessboard{
+#chessboard {
     display: grid;
-    grid-template-columns: repeat(8,100px);
-    grid-template-rows: repeat(8,100px);
-    width: 800px;
-    height: 800px;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: min(80vw, 80vh); /* Use the smaller of viewport width or height */
+    height: min(80vw, 80vh); /* Maintain square shape */
+    max-width: 800px;        /* Limit the max size */
+    max-height: 800px;       /* Prevent exceeding max size */
     background-color: #779556;
-    position: sticky;
-
+    position: sticky;      /* Remove sticky unless necessary */
 }
-
-
-

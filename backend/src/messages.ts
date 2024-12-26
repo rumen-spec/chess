@@ -6,3 +6,10 @@ export const CHECK = "check";
 export const DISCONNECT = "disconnect";
 export const CANCEL = "cancel";
 export const CHESSBOT = "chessbot";
+export const PLAYER = "player";
+
+export interface moveType {
+    from: string,
+    to: string,
+    promotion: number
+}

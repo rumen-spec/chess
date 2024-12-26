@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CHESSBOT = exports.CANCEL = exports.DISCONNECT = exports.CHECK = exports.AVAILABLE_MOVES = exports.GAME_OVER = exports.MOVE = exports.INIT_GAME = void 0;
+exports.PLAYER = exports.CHESSBOT = exports.CANCEL = exports.DISCONNECT = exports.CHECK = exports.AVAILABLE_MOVES = exports.GAME_OVER = exports.MOVE = exports.INIT_GAME = void 0;
 exports.INIT_GAME = "init_game";
 exports.MOVE = "move";
 exports.GAME_OVER = "game_over";
@@ -9,3 +9,4 @@ exports.CHECK = "check";
 exports.DISCONNECT = "disconnect";
 exports.CANCEL = "cancel";
 exports.CHESSBOT = "chessbot";
+exports.PLAYER = "player";
