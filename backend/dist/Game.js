@@ -21,7 +21,6 @@ class Game {
                 color: 'black'
             }
         }));
-        console.log(this.board.fen());
     }
     available_moves(socket, position) {
         socket.send(JSON.stringify({

@@ -8,7 +8,5 @@ wss.on('connection', (ws) => {
     gameManager.addUser(ws)
     ws.on('close', () => {
         gameManager.removeUser(ws);
-        gameManager.users.splice(gameManager.users.indexOf(ws), 1);
-        gameManager.bot_users.splice(gameManager.users.indexOf(ws), 1);
     })
 });

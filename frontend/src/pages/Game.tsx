@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 
 function Game() {
 
+
     const activeTile = useRef<HTMLElement | ''>('');
     const previousTile = useRef<HTMLElement | ''>('');
     const king = useRef<string>('');
@@ -48,7 +49,6 @@ function Game() {
 
         activeTile.current = element;
 
-            console.log("hi")
             sendJsonMessage({
                 type: "available_moves",
                 position: element.id,
@@ -368,7 +368,7 @@ function Game() {
 
     return (
         <div className="game-container" id="game-container">
-            <main><div className="chessboard-container">
+            <div className="chessboard-container">
                 {!white ? <div className="numbers">
                     <h1>1</h1>
                     <h1>2</h1>
@@ -419,7 +419,7 @@ function Game() {
                         }}></div>))}{user_score !== 0 ?
                         <text className='score'>+ {user_score}</text> : <></>}</div>
                 </div>
-            </div></main>
+            </div>
             {game_over && <div className="win-container">
                 <h1>{game_over}</h1>
                 <button onClick={mainmenu}> Main Menu</button>

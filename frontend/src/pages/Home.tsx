@@ -13,17 +13,6 @@ function Home (){
     function startGame(){
         setLoading(true);
         sendJsonMessage({
-            type: "player",
-        })
-        sendJsonMessage({
-            type: "init_game"
-        })
-    }
-    function bot_game(){
-        sendJsonMessage({
-            type: "chessbot"
-        })
-        sendJsonMessage({
             type: "init_game"
         })
     }
@@ -54,7 +43,7 @@ function Home (){
                 <main className="home-main">
                     <div className="home-options">
                         <button onClick={startGame} className="home-button play-online">Play Online</button>
-                        <button onClick={bot_game} className="home-button play-ai">Play Against AI</button>
+                        <button className="home-button play-ai">Play Against AI</button>
                     </div>
                 </main>
                 <footer className="home-footer">
