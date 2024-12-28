@@ -58,7 +58,7 @@ function Game() {
     }
 
     useEffect(() => {
-        if(!gamestate.current){
+        if(gamestate.current == false){
             navigate("/")
         }
         if (message!==undefined){// if another user joins game
