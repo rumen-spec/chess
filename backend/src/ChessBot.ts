@@ -2,6 +2,12 @@ import {WebSocket} from "ws";
 import {Chess, Square} from "chess.js";
 import {AVAILABLE_MOVES, CHECK, GAME_OVER, INIT_GAME, MOVE} from "./messages";
 
+interface moveType{
+    from: string,
+    to: string,
+    promotion: number
+}
+
 export class ChessBot {
     player: WebSocket
     board: Chess
@@ -50,6 +56,13 @@ export class ChessBot {
             return;
         }
 
+        const bot_move = this.moves();
+        this.board.move({ from: bot_move[0].from, to: bot_move[0].to });
+        this.player.send(JSON.stringify({
+            type: MOVE,
+            payload: bot_move[0],
+        }));
+
         if(this.board.isGameOver()){
             if(this.board.isCheckmate()) {
                 this.player.send(JSON.stringify({
@@ -72,6 +85,26 @@ export class ChessBot {
             return;
         }
 
+    }
+
+    moves() {
+        const moves: moveType[] = [];
+        const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
+        for (var i = 0; i < letters.length; i++) {
+            for (let j = 1; j <= letters.length; j++) {
+                const m = letters[i] + j.toString();
+                const n = this.board.moves({ square: m as Square });
+                n.forEach(v => {
+                    if (v.length == 3) {
+                        moves.push({ from: m, to: v[1] + v[2], promotion: 0 });
+                    }
+                    else {
+                        moves.push({ from: m, to: v, promotion: 0 });
+                    }
+                });
+            }
+        }
+        return moves;
     }
 
 }
