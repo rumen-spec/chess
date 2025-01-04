@@ -2,11 +2,13 @@ import {useWebSocketContext} from "./WebSocketContext.tsx";
 import {useNavigate} from "react-router-dom";
 import "./Home.css"
 import {useState} from "react";
+import resources from "./consts.ts";
 
 function Home (){
 
     const {sendJsonMessage, messages, gamestate} = useWebSocketContext();
     const[loading, setLoading] = useState(false);
+    const {sounds} = resources;
 
     const navigate = useNavigate();
 
@@ -17,9 +19,16 @@ function Home (){
         })
     }
 
+    function chessbot(){
+        sendJsonMessage({
+            type: "chessbot"
+        })
+    }
+
     if(messages.current !== undefined){
         gamestate.current = true;
         if(messages.current.type == "init_game"){
+            sounds("NOTIFY", false)
             navigate('/game')
         }
     }
@@ -27,7 +36,7 @@ function Home (){
     function reload(){
         setLoading(false)
         sendJsonMessage({
-            type: "cancel",
+            type: "cancel"
         })
         navigate("/")
     }
@@ -43,7 +52,7 @@ function Home (){
                 <main className="home-main">
                     <div className="home-options">
                         <button onClick={startGame} className="home-button play-online">Play Online</button>
-                        <button className="home-button play-ai">Play Against AI</button>
+                        <button className="home-button play-ai" onClick={chessbot}>Play Against AI</button>
                     </div>
                 </main>
                 <footer className="home-footer">

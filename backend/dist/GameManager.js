@@ -12,11 +12,7 @@ class GameManager {
     }
     addUser(socket) {
         this.users.push(socket);
-        if (this.bot_users.includes(socket))
-            this.addBothandler(socket);
-        else {
-            this.addHandler(socket);
-        }
+        this.Handler({ socket: socket, mode: null });
     }
     removeUser(socket) {
         const game = this.games.find((game) => game.player1 == socket);
@@ -36,56 +32,66 @@ class GameManager {
         this.users.splice(this.users.indexOf(socket), 1);
         this.bot_users.splice(this.users.indexOf(socket), 1);
     }
-    addHandler(socket) {
-        socket.on("message", (data) => {
+    Handler(player) {
+        player.socket.on("message", (data) => {
             const message = JSON.parse(data.toString());
-            if (message.type == messages_1.CHESSBOT) {
-                this.bot_users.push(socket);
+            if (message.type == messages_1.INIT_GAME) {
+                this.handlepvp(player.socket, message);
+                player.mode = "pvp";
+                return;
             }
-            if (message.type === messages_1.INIT_GAME) {
-                if (this.pendingUser && socket != this.pendingUser) {
-                    const game = new Game_1.Game(this.pendingUser, socket);
-                    this.games.push(game);
-                    this.pendingUser = null;
-                }
-                else {
-                    this.pendingUser = socket;
-                }
+            else if (message.type == messages_1.CHESSBOT) {
+                player.mode = "chessbot";
             }
-            if (message.type == messages_1.CANCEL) {
-                if (this.pendingUser == socket) {
-                    if (this.users.length != 0) {
-                        this.pendingUser = this.users[0];
-                        this.users.splice(0, 1);
-                    }
-                    else {
-                        this.pendingUser = null;
-                    }
-                }
-                else {
-                    this.users.splice(this.users.indexOf(socket), 1);
-                }
+            if (player.mode === "pvp") {
+                this.handlepvp(player.socket, message);
             }
-            if (message.type === messages_1.MOVE) {
-                const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
-                if (game) {
-                    game.makeMove(socket, message.move);
-                }
-            }
-            if (message.type === messages_1.AVAILABLE_MOVES) {
-                const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
-                if (game) {
-                    game.available_moves(socket, message.position);
-                }
+            else if (player.mode === "chessbot") {
+                this.handlebot(message);
             }
         });
     }
-    addBothandler(socket) {
-        socket.on("message", (data) => {
-            const message = JSON.parse(data.toString());
-            if (message.type == messages_1.MOVE) {
+    handlepvp(socket, message) {
+        if (message.type === messages_1.INIT_GAME) {
+            if (this.pendingUser && socket != this.pendingUser) {
+                const game = new Game_1.Game(this.pendingUser, socket);
+                this.games.push(game);
+                this.pendingUser = null;
             }
-        });
+            else {
+                this.pendingUser = socket;
+            }
+        }
+        if (message.type == messages_1.CANCEL) {
+            if (this.pendingUser == socket) {
+                if (this.users.length != 0) {
+                    this.pendingUser = this.users[0];
+                    this.users.splice(0, 1);
+                }
+                else {
+                    this.pendingUser = null;
+                }
+            }
+            else {
+                this.users.splice(this.users.indexOf(socket), 1);
+            }
+        }
+        if (message.type === messages_1.MOVE) {
+            const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
+            if (game) {
+                game.makeMove(socket, message.move);
+            }
+        }
+        if (message.type === messages_1.AVAILABLE_MOVES) {
+            const game = this.games.find(game => game.player1 === socket || game.player2 === socket);
+            if (game) {
+                game.available_moves(socket, message.position);
+            }
+        }
+    }
+    handlebot(message) {
+        if (message.type == messages_1.MOVE) {
+        }
     }
 }
 exports.GameManager = GameManager;
