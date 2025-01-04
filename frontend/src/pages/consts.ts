@@ -21,7 +21,7 @@ import win from "../../sounds/win.mp3"
 
 
 // @ts-ignore
-export const BACKEND = import.meta.env.VITE_DEV
+export const BACKEND = import.meta.env.VITE_PRODUCTION
 
 const images = new Map<string, string>()
 const scores = new Map<string, number>()
