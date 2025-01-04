@@ -19,7 +19,9 @@ import promote from "../../sounds/promote.mp3"
 import end from "../../sounds/game-end.mp3"
 import win from "../../sounds/win.mp3"
 
-export const BACKEND = 'wss://chess-u5c0.onrender.com'
+
+// @ts-ignore
+export const BACKEND = import.meta.env.VITE_DEV
 
 const images = new Map<string, string>()
 const scores = new Map<string, number>()
