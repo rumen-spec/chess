@@ -19,6 +19,12 @@ function Home (){
         })
     }
 
+    function chessbot(){
+        sendJsonMessage({
+            type: "chessbot"
+        })
+    }
+
     if(messages.current !== undefined){
         gamestate.current = true;
         if(messages.current.type == "init_game"){
@@ -46,7 +52,7 @@ function Home (){
                 <main className="home-main">
                     <div className="home-options">
                         <button onClick={startGame} className="home-button play-online">Play Online</button>
-                        <button className="home-button play-ai">Play Against AI</button>
+                        <button className="home-button play-ai" onClick={chessbot}>Play Against AI</button>
                     </div>
                 </main>
                 <footer className="home-footer">

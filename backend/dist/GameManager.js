@@ -8,15 +8,17 @@ class GameManager {
         this.games = [];
         this.pendingUser = null;
         this.users = [];
+        this.bot_users = [];
     }
     addUser(socket) {
         this.users.push(socket);
-        this.addHandler(socket);
+        if (this.bot_users.includes(socket))
+            this.addBothandler(socket);
+        else {
+            this.addHandler(socket);
+        }
     }
     removeUser(socket) {
-        this.users.splice(this.users.indexOf(socket), 1);
-    }
-    test(socket) {
         const game = this.games.find((game) => game.player1 == socket);
         const game1 = this.games.find((game) => game.player2 == socket);
         if (game) {
@@ -24,19 +26,22 @@ class GameManager {
                 type: messages_1.DISCONNECT
             }));
             this.games.splice(this.games.indexOf(game), 1);
-            return;
         }
-        if (game1) {
+        else if (game1) {
             game1.player1.send(JSON.stringify({
                 type: messages_1.DISCONNECT
             }));
             this.games.splice(this.games.indexOf(game1), 1);
-            return;
         }
+        this.users.splice(this.users.indexOf(socket), 1);
+        this.bot_users.splice(this.users.indexOf(socket), 1);
     }
     addHandler(socket) {
         socket.on("message", (data) => {
             const message = JSON.parse(data.toString());
+            if (message.type == messages_1.CHESSBOT) {
+                this.bot_users.push(socket);
+            }
             if (message.type === messages_1.INIT_GAME) {
                 if (this.pendingUser && socket != this.pendingUser) {
                     const game = new Game_1.Game(this.pendingUser, socket);
@@ -72,6 +77,13 @@ class GameManager {
                 if (game) {
                     game.available_moves(socket, message.position);
                 }
+            }
+        });
+    }
+    addBothandler(socket) {
+        socket.on("message", (data) => {
+            const message = JSON.parse(data.toString());
+            if (message.type == messages_1.MOVE) {
             }
         });
     }
