@@ -59,7 +59,6 @@ function Game() {
 
     useEffect(() => {
         if(gamestate.current == false){
-            console.log("hi")
             navigate("https://chess-bay-kappa.vercel.app/")
         }
         if (message!==undefined){// if another user joins game
@@ -89,8 +88,6 @@ function Game() {
                         const _tile = document.getElementsByClassName('tile').item(parseInt(tile)) as HTMLDivElement;
                         if (_tile.firstChild != null) {
                             // @ts-ignore
-                            console.log("tile: " + _tile.firstChild.style.backgroundImage, "image: " +images.get("wK"))
-                            // @ts-ignore
                             if (_tile.firstChild.style.backgroundImage == `url("${images.get("wK")}")`) {
                                 _tile.style.backgroundImage = `url("${check}")`;
                                 king.current = _tile.id
@@ -114,7 +111,6 @@ function Game() {
             if (message.type === "available_moves") {
                 moves = message.payload;
                 for (let i = 0; i < moves.length; i++) {
-                    console.log(moves[i], moves[i] == '8=');
                     if (moves[i] == 'O-O' && white) {
                         moves[i] = 'g1';
                     }
@@ -161,7 +157,6 @@ function Game() {
                 const piece_id = message.move.to[0] + message.move.from[1];
                 const square = document.getElementById(piece_id) as HTMLDivElement;
                 const piece = square.firstChild as HTMLDivElement;
-                console.log(square)
                 square.removeChild(piece as ChildNode);
                 sounds("CAPTURE", false);
                 if(message.turn){
@@ -269,7 +264,6 @@ function Game() {
 
 
             function handlePossibleMoves(moves: string[]) {
-                console.log(moves)
                 for (let i = 0; i < moves.length; i++) {
                     const tile = document.getElementById(moves[i]) as HTMLDivElement;
                         if (tile.firstChild != null) {
