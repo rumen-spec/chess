@@ -8,5 +8,11 @@ wss.on('connection', (ws) => {
     gameManager.addUser(ws);
     ws.on('close', () => {
         gameManager.removeUser(ws);
+        if (ws == gameManager.getPending()) {
+            gameManager.setPending(null);
+            if (gameManager.users.length > 0) {
+                gameManager.setPending(gameManager.users[0]);
+            }
+        }
     });
 });
