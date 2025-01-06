@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import "./Home.css"
 import {useState} from "react";
 import resources from "./consts.ts";
+import Chessboard from "./Chessboard.tsx";
 
 function Home (){
 
@@ -50,6 +51,7 @@ function Home (){
                     <p>Play chess with friends, AI, or opponents worldwide!</p>
                 </header>
                 <main className="home-main">
+                    <Chessboard/>
                     <div className="home-options">
                         <button onClick={startGame} className="home-button play-online">Play Online</button>
                         <button className="home-button play-ai" onClick={chessbot}>Play Against AI</button>

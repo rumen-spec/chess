@@ -64,7 +64,10 @@ function Game() {
         if (message!==undefined){// if another user joins game
             mark = false;
             if (message.type === "init_game") {
-
+                const chessboardElement = document.getElementById('chessboard')
+                if(chessboardElement){
+                    chessboardElement.style.pointerEvents = "all";
+                }
                 if (message.payload.color == 'black') {
                     setWhite(false);
                     const Chessboard = document.getElementById('chessboard') as HTMLElement;
