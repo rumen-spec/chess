@@ -29,10 +29,16 @@ export class Game {
     }
 
     available_moves(socket: WebSocket, position: Square){
+        const formatted: Square[] = []
+        const moves = this.board.moves({square:position, verbose:true})
+
+        moves.forEach( move =>{
+            formatted.push(move.to)
+        })
         socket.send(JSON.stringify({
             type: AVAILABLE_MOVES,
             square: position,
-            payload: this.board.moves({square:position})
+            payload: formatted
         }))
     }
 
@@ -124,8 +130,6 @@ export class Game {
                     }
                 }))
             }
-            this.board.clear();
-            return;
         }
     }
 }

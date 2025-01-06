@@ -23,10 +23,15 @@ class Game {
         }));
     }
     available_moves(socket, position) {
+        const formatted = [];
+        const moves = this.board.moves({ square: position, verbose: true });
+        moves.forEach(move => {
+            formatted.push(move.to);
+        });
         socket.send(JSON.stringify({
             type: messages_1.AVAILABLE_MOVES,
             square: position,
-            payload: this.board.moves({ square: position })
+            payload: formatted
         }));
     }
     makeMove(socket, move) {
@@ -116,8 +121,6 @@ class Game {
                     }
                 }));
             }
-            this.board.clear();
-            return;
         }
     }
 }
