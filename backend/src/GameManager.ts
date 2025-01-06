@@ -9,7 +9,7 @@ interface Player{
 export class GameManager {
     private games: Game[];
     private pendingUser: WebSocket | null;
-    private users: WebSocket[];
+    public users: WebSocket[];
     private bot_users: WebSocket[];
 
 
@@ -18,6 +18,13 @@ export class GameManager {
         this.pendingUser = null;
         this.users = [];
         this.bot_users = [];
+    }
+
+    getPending(){
+        return this.pendingUser
+    }
+    setPending(socket: WebSocket | null){
+        this.pendingUser = socket;
     }
 
     addUser(socket: WebSocket){
@@ -44,8 +51,8 @@ export class GameManager {
                 this.games.splice(this.games.indexOf(game1), 1);
             }
 
-            this.users.splice(this.users.indexOf(socket), 1);
-            this.bot_users.splice(this.users.indexOf(socket), 1);
+            this.users.splice(this.users.indexOf(socket));
+            this.bot_users.splice(this.users.indexOf(socket));
     }
 
     private Handler(player: Player){

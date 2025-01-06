@@ -10,6 +10,12 @@ class GameManager {
         this.users = [];
         this.bot_users = [];
     }
+    getPending() {
+        return this.pendingUser;
+    }
+    setPending(socket) {
+        this.pendingUser = socket;
+    }
     addUser(socket) {
         this.users.push(socket);
         this.Handler({ socket: socket, mode: null });
@@ -29,8 +35,8 @@ class GameManager {
             }));
             this.games.splice(this.games.indexOf(game1), 1);
         }
-        this.users.splice(this.users.indexOf(socket), 1);
-        this.bot_users.splice(this.users.indexOf(socket), 1);
+        this.users.splice(this.users.indexOf(socket));
+        this.bot_users.splice(this.users.indexOf(socket));
     }
     Handler(player) {
         player.socket.on("message", (data) => {
