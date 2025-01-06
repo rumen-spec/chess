@@ -66,7 +66,7 @@ export class ChessBot {
             return;
         }
 
-        const best = this.findBestMoveForBlack(4)
+        const best = this.findBestMoveForBlack(3)
         if(best){
             if(best.flags.includes("p")){
                 this.board.move({from: best.from, to: best.to, promotion: "q"});
