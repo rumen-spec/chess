@@ -59,7 +59,7 @@ function Game() {
 
     useEffect(() => {
         if(gamestate.current == false){
-            navigate("/")
+            navigate("https://chess-bay-kappa.vercel.app/")
         }
         if (message!==undefined){// if another user joins game
             mark = false;
