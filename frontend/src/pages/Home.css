@@ -48,17 +48,19 @@ body {
 /* Main Options */
 .home-main {
     display: flex;
-    flex-direction: column;
     align-items: center;
 }
 
 .home-options {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    padding-left: 3rem;
     gap: 20px;
     margin: 40px 0;
 }
-
+#chessboard {
+    pointer-events: none;
+}
 .home-button {
     padding: 15px 30px;
     font-size: 1.2rem;
@@ -67,6 +69,7 @@ body {
     border-radius: 8px;
     cursor: pointer;
     transition: all 0.3s ease;
+    height: 6rem;
 }
 
 .play-online {
