@@ -1,6 +1,6 @@
 # Ultimate Chess
 
- 
+##Disclaimer! im hosting the backend on a free version of render.com so its super slow
 
 ### 🏆 Live Demo
 
