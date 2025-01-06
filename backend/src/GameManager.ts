@@ -38,6 +38,7 @@ export class GameManager {
     removeUser(socket: WebSocket){
         const game = this.games.find((game) => game.player1 == socket)
         const game1 = this.games.find((game) => game.player2 == socket)
+        const botgame = this.bot_games.find((game) => game.player = socket)
 
             if(game){
                 game.player2.send(JSON.stringify({
@@ -52,6 +53,10 @@ export class GameManager {
                 }));
 
                 this.games.splice(this.games.indexOf(game1), 1);
+            }else if(botgame){
+                this.bot_games.splice(this.bot_games.indexOf(botgame), 1);
+                this.bot_users.splice(this.bot_users.indexOf(socket))
+                return
             }
 
             this.users.splice(this.users.indexOf(socket));
@@ -68,6 +73,7 @@ export class GameManager {
             }else if(message.type == CHESSBOT){
                 player.mode = "chessbot"
                 const game = new ChessBot(player.socket);
+                this.users.splice(this.users.indexOf(player.socket), 1)
                 this.bot_games.push(game)
                 this.bot_users.push(player.socket)
             }
@@ -133,6 +139,9 @@ export class GameManager {
                 if(game){
                     game.makeMove(message.move)
                 }
+            }
+            if(message.type === GAME_OVER){
+                this.removeUser(player)
             }
     }
 
