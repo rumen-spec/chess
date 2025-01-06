@@ -1,6 +1,7 @@
 import { WebSocket} from "ws";
 import {Game} from './Game'
-import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE, CHESSBOT} from "./messages";
+import {AVAILABLE_MOVES, CANCEL, DISCONNECT, INIT_GAME, MOVE, CHESSBOT, GAME_OVER} from "./messages";
+import {ChessBot} from "./ChessBot";
 
 interface Player{
     socket: WebSocket,
@@ -10,14 +11,16 @@ export class GameManager {
     private games: Game[];
     private pendingUser: WebSocket | null;
     public users: WebSocket[];
-    private bot_users: WebSocket[];
+    private bot_users: WebSocket[]
+    private bot_games: ChessBot[];
 
 
     constructor() {
         this.games = []
         this.pendingUser = null;
         this.users = [];
-        this.bot_users = [];
+        this.bot_users = []
+        this.bot_games = [];
     }
 
     getPending(){
@@ -52,7 +55,6 @@ export class GameManager {
             }
 
             this.users.splice(this.users.indexOf(socket));
-            this.bot_users.splice(this.users.indexOf(socket));
     }
 
     private Handler(player: Player){
@@ -65,11 +67,14 @@ export class GameManager {
                 return;
             }else if(message.type == CHESSBOT){
                 player.mode = "chessbot"
+                const game = new ChessBot(player.socket);
+                this.bot_games.push(game)
+                this.bot_users.push(player.socket)
             }
             if(player.mode === "pvp"){
                 this.handlepvp(player.socket, message)
             }else if(player.mode === "chessbot"){
-                this.handlebot(message)
+                this.handlebot(player.socket,message)
             }
         })
     }
@@ -111,11 +116,23 @@ export class GameManager {
                 game.available_moves(socket, message.position)
             }
         }
+        if(message.type === GAME_OVER){
+            this.removeUser(socket)
+        }
     }
 
-    private handlebot(message: any){
-            if(message.type == MOVE){
-
+    private handlebot(player: WebSocket, message: any){
+            if(message.type === AVAILABLE_MOVES){
+                const game = this.bot_games.find(socket => socket.player === player)
+                if(game){
+                    game.available_moves(message.position)
+                }
+            }
+            if(message.type === MOVE){
+                const game = this.bot_games.find(socket => socket.player === player)
+                if(game){
+                    game.makeMove(message.move)
+                }
             }
     }
 

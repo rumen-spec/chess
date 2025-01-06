@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.GameManager = void 0;
 const Game_1 = require("./Game");
 const messages_1 = require("./messages");
+const ChessBot_1 = require("./ChessBot");
 class GameManager {
     constructor() {
         this.games = [];
         this.pendingUser = null;
         this.users = [];
         this.bot_users = [];
+        this.bot_games = [];
     }
     getPending() {
         return this.pendingUser;
@@ -36,7 +38,6 @@ class GameManager {
             this.games.splice(this.games.indexOf(game1), 1);
         }
         this.users.splice(this.users.indexOf(socket));
-        this.bot_users.splice(this.users.indexOf(socket));
     }
     Handler(player) {
         player.socket.on("message", (data) => {
@@ -48,12 +49,15 @@ class GameManager {
             }
             else if (message.type == messages_1.CHESSBOT) {
                 player.mode = "chessbot";
+                const game = new ChessBot_1.ChessBot(player.socket);
+                this.bot_games.push(game);
+                this.bot_users.push(player.socket);
             }
             if (player.mode === "pvp") {
                 this.handlepvp(player.socket, message);
             }
             else if (player.mode === "chessbot") {
-                this.handlebot(message);
+                this.handlebot(player.socket, message);
             }
         });
     }
@@ -94,9 +98,22 @@ class GameManager {
                 game.available_moves(socket, message.position);
             }
         }
+        if (message.type === messages_1.GAME_OVER) {
+            this.removeUser(socket);
+        }
     }
-    handlebot(message) {
-        if (message.type == messages_1.MOVE) {
+    handlebot(player, message) {
+        if (message.type === messages_1.AVAILABLE_MOVES) {
+            const game = this.bot_games.find(socket => socket.player === player);
+            if (game) {
+                game.available_moves(message.position);
+            }
+        }
+        if (message.type === messages_1.MOVE) {
+            const game = this.bot_games.find(socket => socket.player === player);
+            if (game) {
+                game.makeMove(message.move);
+            }
         }
     }
 }

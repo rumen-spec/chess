@@ -63,6 +63,7 @@ function Game() {
         }
         if (message!==undefined){// if another user joins game
             mark = false;
+            console.log(message)
             if (message.type === "init_game") {
                 const chessboardElement = document.getElementById('chessboard')
                 if(chessboardElement){
@@ -112,30 +113,6 @@ function Game() {
 
             if (message.type === "available_moves") {
                 moves = message.payload;
-                for (let i = 0; i < moves.length; i++) {
-                    console.log(moves[i], moves[i] == '8=');
-                    if (moves[i] == 'O-O' && white) {
-                        moves[i] = 'g1';
-                    }
-                    else if (moves[i] == 'O-O' && !white) {
-                        moves[i] = 'g8';
-                    }
-                    else if (moves[i] == 'O-O-O' && white) {
-                        moves[i] = 'c1';
-                    }
-                    else if (moves[i] == 'O-O-O' && !white) {
-                        moves[i] = 'c8';
-                    }
-                    else if (moves[i].length !== 2 && moves[i][1] != 'x') {
-                        moves[i] = moves[i][1] + moves[i][2]
-                        if(activeTile.current != ""){
-                            if (moves[i] == '8=') moves[i] = moves[i] = activeTile.current.id[0] + "8";
-                            else if (moves[i] == '1=') moves[i] = moves[i] = activeTile.current.id[0] + "1";
-                        }
-                    } else if (moves[i][1] == 'x') {
-                        moves[i] = moves[i][2] + moves[i][3]
-                    }
-                }
                 handlePossibleMoves(moves);
                 previousmoves.current = moves;
             }
@@ -147,12 +124,18 @@ function Game() {
                     else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
+                    sendJsonMessage({
+                        type: "game_over"
+                    })
                 }else{
                     setGameOver(message.payload.how)
                     if(message.payload.winner != "white") sounds("WIN", false);
                     else{sounds("END", false);}
                     const chessboardElement = document.getElementById('chessboard') as HTMLElement;
                     chessboardElement.style.pointerEvents = "none";
+                    sendJsonMessage({
+                        type: "game_over"
+                    })
                 }
             }
 
