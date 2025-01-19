@@ -51,7 +51,7 @@ class ChessBot {
             console.error(e);
             return;
         }
-        const best = this.findBestMoveForBlack(4);
+        const best = this.findBestMoveForBlack(3);
         if (best) {
             if (best.flags.includes("p")) {
                 this.board.move({ from: best.from, to: best.to, promotion: "q" });
@@ -98,28 +98,6 @@ class ChessBot {
             return;
         }
     }
-    // private moves() {
-    //     const moves: moveType[] = [];
-    //     const letters = ["a", "b", "c", "d", "e", "f", "g", "h"];
-    //     for (var i = 0; i < letters.length; i++) {
-    //         for (let j = 1; j <= letters.length; j++) {
-    //             const m = letters[i] + j.toString();
-    //             const n = this.board.moves({ square: m as Square });
-    //             n.forEach(v => {
-    //                 if(v.length == 4){
-    //                     moves.push({ from: m, to: v[2] + v[3], promotion: 0 });
-    //                 }
-    //                 if (v.length == 3) {
-    //                     moves.push({ from: m, to: v[1] + v[2], promotion: 0 });
-    //                 }
-    //                 else {
-    //                     moves.push({ from: m, to: v, promotion: 0 });
-    //                 }
-    //             });
-    //         }
-    //     }
-    //     return moves;
-    // }
     evaluateBoard() {
         const pieceValues = {
             p: 1, n: 3, b: 3, r: 5, q: 9, k: 0

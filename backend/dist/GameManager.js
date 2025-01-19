@@ -25,6 +25,7 @@ class GameManager {
     removeUser(socket) {
         const game = this.games.find((game) => game.player1 == socket);
         const game1 = this.games.find((game) => game.player2 == socket);
+        const botgame = this.bot_games.find((game) => game.player = socket);
         if (game) {
             game.player2.send(JSON.stringify({
                 type: messages_1.DISCONNECT
@@ -36,6 +37,11 @@ class GameManager {
                 type: messages_1.DISCONNECT
             }));
             this.games.splice(this.games.indexOf(game1), 1);
+        }
+        else if (botgame) {
+            this.bot_games.splice(this.bot_games.indexOf(botgame), 1);
+            this.bot_users.splice(this.bot_users.indexOf(socket));
+            return;
         }
         this.users.splice(this.users.indexOf(socket));
     }
@@ -50,6 +56,7 @@ class GameManager {
             else if (message.type == messages_1.CHESSBOT) {
                 player.mode = "chessbot";
                 const game = new ChessBot_1.ChessBot(player.socket);
+                this.users.splice(this.users.indexOf(player.socket), 1);
                 this.bot_games.push(game);
                 this.bot_users.push(player.socket);
             }
@@ -114,6 +121,9 @@ class GameManager {
             if (game) {
                 game.makeMove(message.move);
             }
+        }
+        if (message.type === messages_1.GAME_OVER) {
+            this.removeUser(player);
         }
     }
 }
